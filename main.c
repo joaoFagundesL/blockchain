@@ -32,6 +32,18 @@ struct sistema_bitcoin
   uint32_t carteira[256];
 };
 
+struct enderecos_bitcoin
+{
+  uint32_t chave;
+  struct enderecos_bitcoin *prox;
+};
+
+int conta_enderecos(struct enderecos_bitcoin *raiz);
+int escolhe_carteira(struct enderecos_bitcoin *raiz, uint32_t indice);
+int checa_zero_bitcoin(struct enderecos_bitcoin **raiz, struct sistema_bitcoin *sistema);
+void remove_no(struct enderecos_bitcoin **raiz, uint32_t chave);
+void inserir_enderecos_com_bitcoins(struct enderecos_bitcoin **raiz, uint32_t chave);
+
 void iniciar_carteira(struct sistema_bitcoin *sistema)
 {
   memset(sistema->carteira, 0, sizeof(sistema->carteira));
@@ -39,15 +51,51 @@ void iniciar_carteira(struct sistema_bitcoin *sistema)
 
 void gerar_transacoes_bloco(struct bloco_nao_minerado *bloco,
                             unsigned long int endereco_minerador,
-                            struct sistema_bitcoin *sistema, MTRand rand)
+                            struct sistema_bitcoin *sistema, MTRand rand, struct enderecos_bitcoin *raiz)
 {
   size_t num_transacoes = 0;
-
+  uint32_t carteira_auxiliar[256] = {0};
   while (num_transacoes < MAX_TRANSACOES_BLOCO)
   {
+    /*
     uint32_t enderecos_com_bitcoins[256];
     size_t num_enderecos_com_bitcoins = 0;
+*/
+    int valor_lista_origem = genRandLong(&rand) % conta_enderecos(&(*raiz));
+    unsigned long int endereco_origem = escolhe_carteira(&(*raiz), valor_lista_origem);
+    unsigned long int endereco_destino;
+    do
+    {
+      endereco_destino = genRandLong(&rand) % 256;
+    } while (endereco_origem == endereco_destino);
 
+    uint32_t saldo_disponivel = sistema->carteira[endereco_origem];
+    unsigned long int quantidade = genRandLong(&rand) % (saldo_disponivel + 1);
+
+    sistema->carteira[endereco_origem] -= quantidade;
+    sistema->carteira[endereco_destino] += quantidade;
+    carteira_auxiliar[endereco_destino] += quantidade;
+
+    // Registrar a transação no bloco
+    bloco->data[num_transacoes * 3] = endereco_origem;
+    bloco->data[num_transacoes * 3 + 1] = endereco_destino;
+    bloco->data[num_transacoes * 3 + 2] = quantidade;
+
+    /*
+    if (quantidade > 0 && sistema->carteira[endereco_origem] >= quantidade)
+    {
+      sistema->carteira[endereco_origem] -= quantidade;
+      sistema->carteira[endereco_destino] += quantidade;
+
+      // Registrar a transação no bloco
+      bloco->data[num_transacoes * 3] = endereco_origem;
+      bloco->data[num_transacoes * 3 + 1] = endereco_destino;
+      bloco->data[num_transacoes * 3 + 2] = quantidade;
+    }
+    */
+    num_transacoes++;
+
+    /*
     for (uint32_t i = 0; i < 256; i++)
     {
       if (sistema->carteira[i] > 0)
@@ -89,11 +137,16 @@ void gerar_transacoes_bloco(struct bloco_nao_minerado *bloco,
       bloco->data[num_transacoes * 3 + 2] = quantidade;
 
       num_transacoes++;
+      */
+  }
+  bloco->data[183] = (unsigned char)endereco_minerador;
+  for (uint32_t i = 0; i < 256; i++)
+  {
+    if (carteira_auxiliar[i] > 0)
+    {
+      inserir_enderecos_com_bitcoins(&raiz, i);
     }
   }
-
-  bloco->data[183] = (unsigned char)endereco_minerador;
-  // printf("DEPOIS DA ATRIBUICAO = %u\n", bloco->data[183]);
 }
 
 void minerar_bloco(struct bloco_nao_minerado *bloco, unsigned char *hash)
@@ -153,6 +206,50 @@ void inserir_bloco(struct bloco_minerado **blockchain,
   }
 }
 
+void inserir_enderecos_com_bitcoins(struct enderecos_bitcoin **raiz, uint32_t chave)
+{
+  struct enderecos_bitcoin *novo = (struct enderecos_bitcoin *)malloc(sizeof(struct enderecos_bitcoin));
+  if (novo)
+  {
+    novo->chave = chave;
+    novo->prox = *raiz;
+    *raiz = novo;
+  }
+}
+
+int conta_enderecos(struct enderecos_bitcoin *raiz)
+{
+  int cont = 0;
+  if (!raiz)
+    return 0;
+  if (raiz)
+    while (raiz)
+    {
+      raiz = raiz->prox;
+      cont++;
+    }
+  return cont;
+}
+
+int escolhe_carteira(struct enderecos_bitcoin *raiz, uint32_t indice)
+{
+  int i = 0;
+  if (!raiz)
+    return 0;
+  if (raiz)
+  {
+    while (i != indice && raiz != NULL)
+    {
+      raiz = raiz->prox;
+      i++;
+    }
+    if (raiz)
+      return raiz->chave;
+    else
+      return 0;
+  }
+}
+
 void imprimir_blocos_minerados(struct bloco_minerado *blockchain,
                                struct sistema_bitcoin sistema)
 {
@@ -198,10 +295,65 @@ void imprimir_blocos_minerados(struct bloco_minerado *blockchain,
   }
 }
 
+int checa_zero_bitcoin(struct enderecos_bitcoin **raiz, struct sistema_bitcoin *sistema)
+{
+
+  if (*raiz == NULL)
+    return 1;
+  struct enderecos_bitcoin *atual = *raiz;
+
+  while (atual)
+  {
+
+    if (sistema->carteira[atual->chave] <= 0)
+    {
+      // printf("Remoção do %d\n", atual->chave);
+      // printf("Valor na carteira: %d\n", sistema->carteira[140]);
+      remove_no(raiz, atual->chave);
+      return 0;
+    }
+    atual = atual->prox;
+  }
+  return 1;
+}
+
+void remove_no(struct enderecos_bitcoin **raiz, uint32_t chave)
+{
+  if (*raiz == NULL)
+    return;
+
+  if ((*raiz)->chave == chave)
+  {
+    struct enderecos_bitcoin *temp = *raiz;
+
+    *raiz = (*raiz)->prox;
+
+    free(temp);
+
+    temp = NULL;
+
+    return;
+  }
+
+  struct enderecos_bitcoin *atual = *raiz;
+  struct enderecos_bitcoin *anterior = NULL;
+  while (atual != NULL && atual->chave != chave)
+  {
+    anterior = atual;
+    atual = atual->prox;
+  }
+
+  if (atual == NULL)
+    return;
+  anterior->prox = atual->prox;
+  free(atual);
+}
+
 int main()
 {
   struct sistema_bitcoin sistema;
   iniciar_carteira(&sistema);
+  struct enderecos_bitcoin *raiz = NULL;
 
   struct bloco_minerado *blockchain = NULL;
 
@@ -209,9 +361,10 @@ int main()
   unsigned char hash_anterior[SHA256_DIGEST_LENGTH] = {0};
 
   MTRand rand = seedRand(1234567);
+  struct bloco_nao_minerado bloco;
+  int checa_carteiras;
   for (numero_bloco = 1; numero_bloco <= TOTAL_BLOCOS; ++numero_bloco)
   {
-    struct bloco_nao_minerado bloco;
     bloco.numero = numero_bloco;
     memcpy(bloco.hash_anterior, hash_anterior, SHA256_DIGEST_LENGTH);
 
@@ -230,19 +383,30 @@ int main()
 
       unsigned long int endereco_minerador = genRandLong(&rand) % 256;
       bloco.data[183] = (unsigned char)endereco_minerador;
+
       minerar_bloco(&bloco, hash);
+      inserir_enderecos_com_bitcoins(&raiz, endereco_minerador);
       sistema.carteira[(uint32_t)bloco.data[183]] += 50;
     }
     else
     {
+
       unsigned long int endereco_minerador = genRandLong(&rand) % 256;
-      gerar_transacoes_bloco(&bloco, endereco_minerador, &sistema, rand);
+
+      gerar_transacoes_bloco(&bloco, endereco_minerador, &sistema, rand, raiz);
+
       minerar_bloco(&bloco, hash);
+      inserir_enderecos_com_bitcoins(&raiz, endereco_minerador);
       sistema.carteira[(uint32_t)bloco.data[183]] += 50;
     }
 
     inserir_bloco(&blockchain, bloco, hash);
-
+    checa_carteiras = 0;
+    while (checa_carteiras != 1)
+    {
+      checa_carteiras = checa_zero_bitcoin(&raiz, &sistema);
+    }
+    memset(bloco.data, 0, sizeof(bloco.data));
     memcpy(hash_anterior, hash, SHA256_DIGEST_LENGTH);
   }
 
