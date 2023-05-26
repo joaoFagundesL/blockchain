@@ -155,7 +155,7 @@ void minerar_bloco(struct bloco_nao_minerado *bloco, unsigned char *hash,
 }
 
 void gerar_transacoes_bloco(struct bloco_nao_minerado *bloco,
-                            struct sistema_bitcoin *sistema, MTRand rand,
+                            struct sistema_bitcoin *sistema, MTRand *rand,
                             struct enderecos_bitcoin **raiz,
                             struct estatisticas *est, unsigned char *hash) {
 
@@ -163,17 +163,12 @@ void gerar_transacoes_bloco(struct bloco_nao_minerado *bloco,
   uint32_t carteira_auxiliar[NUM_ENDERECOS] = {0};
 
   unsigned long int max_transacao =
-      genRandLong(&rand) % (MAX_TRANSACOES_BLOCO + 1);
-
-  // if (max_transacao > est->maior_transacao) {
-  //   est->maior_transacao = max_transacao;
-  //   memcpy(est->hash, )
-  // }
+      genRandLong(rand) % (MAX_TRANSACOES_BLOCO + 1);
 
   while (num_transacoes < max_transacao) {
     size_t num_enderecos_com_bitcoins = 0;
 
-    int valor_lista_origem = genRandLong(&rand) % (conta_enderecos(*raiz));
+    int valor_lista_origem = genRandLong(rand) % (conta_enderecos(*raiz));
 
     unsigned long int endereco_origem =
         escolhe_carteira(*raiz, valor_lista_origem);
@@ -181,11 +176,11 @@ void gerar_transacoes_bloco(struct bloco_nao_minerado *bloco,
     unsigned long int endereco_destino;
 
     do {
-      endereco_destino = genRandLong(&rand) % NUM_ENDERECOS;
+      endereco_destino = genRandLong(rand) % NUM_ENDERECOS;
     } while (endereco_origem == endereco_destino);
 
     uint32_t saldo_disponivel = sistema->carteira[endereco_origem];
-    unsigned long int quantidade = genRandLong(&rand) % (saldo_disponivel + 1);
+    unsigned long int quantidade = genRandLong(rand) % (saldo_disponivel + 1);
 
     sistema->carteira[endereco_origem] -= quantidade;
     carteira_auxiliar[endereco_destino] += quantidade;
@@ -197,7 +192,7 @@ void gerar_transacoes_bloco(struct bloco_nao_minerado *bloco,
     num_transacoes++;
   }
 
-  unsigned long int endereco_minerador = genRandLong(&rand) % NUM_ENDERECOS;
+  unsigned long int endereco_minerador = genRandLong(rand) % NUM_ENDERECOS;
 
   bloco->data[DATA_LENGTH - 1] = (unsigned char)endereco_minerador;
 
@@ -251,20 +246,22 @@ void imprimir_blocos_minerados(struct bloco_minerado *blockchain,
 
     printf("\n");
     printf("Endereço do minerador: %u\n", atual->bloco.data[DATA_LENGTH - 1]);
-    // if (atual->bloco.numero != 1) {
-    //   for (int i = 0; i < ((struct num_transacoes *)atual)->quantidade;
-    //   i++) {
-    //     uint32_t endereco_origem = atual->bloco.data[i * 3];
-    //     uint32_t endereco_destino = atual->bloco.data[i * 3 + 1];
-    //     uint32_t quantidade = atual->bloco.data[i * 3 + 2];
-    //
-    //     printf("Transação %d:\n", i + 1);
-    //
-    //     printf("endereco de origem: %u\n", endereco_origem);
-    //     printf("endereco de destino: %u\n", endereco_destino);
-    //     printf("quantidade transferida: %u\n\n", quantidade);
-    //   }
-    // }
+    if (atual->bloco.numero != 1) {
+      for (int i = 0; i < MAX_TRANSACOES_BLOCO; i++) {
+        uint32_t endereco_origem = atual->bloco.data[i * 3];
+        uint32_t endereco_destino = atual->bloco.data[i * 3 + 1];
+        uint32_t quantidade = atual->bloco.data[i * 3 + 2];
+
+        if (endereco_origem == 0 && endereco_destino == 0 && quantidade == 0)
+          break;
+
+        printf("Transação %d:\n", i + 1);
+
+        printf("endereco de origem: %u\n", endereco_origem);
+        printf("endereco de destino: %u\n", endereco_destino);
+        printf("quantidade transferida: %u\n\n", quantidade);
+      }
+    }
     printf("\n");
 
     atual = atual->prox;
@@ -321,8 +318,8 @@ int checa_zero_bitcoin(struct enderecos_bitcoin **raiz,
 
 void imprime_lista(struct enderecos_bitcoin *raiz) {
   while (raiz != NULL) {
-    printf("%d ",
-           raiz->chave); // Supondo que o campo a ser impresso seja 'valor'
+    /* Supondo que o campo a ser impresso seja 'valor' */
+    printf("%d ", raiz->chave);
     raiz = raiz->prox;
   }
 
@@ -382,7 +379,7 @@ void processar_bloco(struct enderecos_bitcoin **raiz,
 
       /* Depois de gerar as transacoes do bloco a funcao vai chamar a funcao de
        * minerar com os parametros corretos */
-      gerar_transacoes_bloco(&bloco, sistema, rand, raiz, est, hash);
+      gerar_transacoes_bloco(&bloco, sistema, &rand, raiz, est, hash);
 
       sistema->carteira[(uint32_t)bloco.data[DATA_LENGTH - 1]] +=
           RECOMPENSA_MINERACAO;
