@@ -11,7 +11,7 @@
 #include <sys/types.h>
 #include <time.h>
 
-#define TOTAL_BLOCOS 5
+#define TOTAL_BLOCOS 1000
 #define MAX_TRANSACOES_BLOCO 61
 #define MAX_BITCOINS_TRANSACAO 100
 #define NUM_ENDERECOS 256
@@ -71,6 +71,16 @@ int conta_enderecos(struct enderecos_bitcoin *raiz) {
       cont++;
     }
   return cont;
+}
+
+void numero_medio_bitcoins(struct bloco_minerado *blockchain) {
+  struct bloco_minerado *tmp = blockchain;
+
+  while (tmp != NULL) {
+    for (size_t i = 0; i < MAX_TRANSACOES_BLOCO; i++) {
+      uint32_t quantidade = tmp->bloco.data[i * 3 + 2];
+    }
+  }
 }
 
 void verificar_hash_com_menos_transacao(struct bloco_minerado *blockchain,
@@ -155,6 +165,7 @@ void encontrar_maior_numero_bitcoins(uint32_t carteira[]) {
 
   uint8_t *enderecos_max_bitcoins = malloc(sizeof(uint8_t));
   assert(enderecos_max_bitcoins != NULL);
+
   for (size_t i = 0; i < NUM_ENDERECOS; i++) {
     if (carteira[i] == max_bitcoins) {
       enderecos_max_bitcoins[num_enderecos_max_bitcoins] = i;
@@ -163,6 +174,7 @@ void encontrar_maior_numero_bitcoins(uint32_t carteira[]) {
       enderecos_max_bitcoins =
           realloc(enderecos_max_bitcoins,
                   sizeof(uint8_t) * (num_enderecos_max_bitcoins + 1));
+
       assert(enderecos_max_bitcoins != NULL);
     }
   }
@@ -240,13 +252,17 @@ void gerar_transacoes_bloco(struct bloco_nao_minerado *bloco,
         escolhe_carteira(*raiz, valor_lista_origem);
 
     unsigned long int endereco_destino;
+    unsigned long int quantidade;
 
     do {
       endereco_destino = genRandLong(rand) % NUM_ENDERECOS;
     } while (endereco_origem == endereco_destino);
 
     uint32_t saldo_disponivel = sistema->carteira[endereco_origem];
-    unsigned long int quantidade = genRandLong(rand) % (saldo_disponivel + 1);
+
+    do {
+      quantidade = genRandLong(rand) % (saldo_disponivel + 1);
+    } while (quantidade >= MAX_BITCOINS_TRANSACAO);
 
     sistema->carteira[endereco_origem] -= quantidade;
     carteira_auxiliar[endereco_destino] += quantidade;
@@ -474,11 +490,10 @@ int main() {
 
   struct enderecos_bitcoin *raiz = NULL;
   struct bloco_minerado *blockchain = NULL;
+
   struct estatisticas est = {.maior_transacao = 0,
                              .menor_transacao = MAX_TRANSACOES_BLOCO + 1};
 
-  /* Struct que mantém controle de algumas estatisticas relevantes, bem como o
-   * numero maximo de transacoes e o respectivo hash */
   struct sistema_bitcoin sistema;
 
   iniciar_carteira(&sistema);
