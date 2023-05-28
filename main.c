@@ -85,6 +85,9 @@ void verificar_hash_com_menos_transacao(struct bloco_minerado *blockchain,
          est->menor_transacao);
 
   while (tmp != NULL) {
+    if (tmp->bloco.numero == 1)
+      tmp = tmp->prox;
+
     int count = 0;
     for (size_t i = 0; i < MAX_TRANSACOES_BLOCO; i++) {
       uint32_t endereco_origem = tmp->bloco.data[i * 3];
@@ -190,8 +193,7 @@ int escolhe_carteira(struct enderecos_bitcoin *raiz, uint32_t indice) {
     return 0;
 }
 
-void minerar_bloco(struct bloco_nao_minerado *bloco, unsigned char *hash,
-                   unsigned long int num_transacao, struct estatisticas *est) {
+void minerar_bloco(struct bloco_nao_minerado *bloco, unsigned char *hash) {
   uint32_t nonce = 0;
 
   unsigned char
@@ -215,14 +217,6 @@ void minerar_bloco(struct bloco_nao_minerado *bloco, unsigned char *hash,
     }
 
     nonce++;
-  }
-
-  if (num_transacao > est->maior_transacao) {
-    est->maior_transacao = num_transacao;
-  }
-
-  if (num_transacao < est->menor_transacao) {
-    est->menor_transacao = num_transacao;
   }
 }
 
@@ -263,6 +257,11 @@ void gerar_transacoes_bloco(struct bloco_nao_minerado *bloco,
 
     num_transacoes++;
   }
+  if (num_transacoes > est->maior_transacao)
+    est->maior_transacao = num_transacoes;
+
+  if (num_transacoes < est->menor_transacao)
+    est->menor_transacao = num_transacoes;
 
   unsigned long int endereco_minerador = genRandLong(rand) % NUM_ENDERECOS;
 
@@ -274,7 +273,7 @@ void gerar_transacoes_bloco(struct bloco_nao_minerado *bloco,
       inserir_enderecos_com_bitcoins(raiz, i);
     }
   }
-  minerar_bloco(bloco, hash, max_transacao, est);
+  minerar_bloco(bloco, hash);
   inserir_enderecos_com_bitcoins(raiz, endereco_minerador);
 }
 
@@ -445,19 +444,11 @@ void processar_bloco(struct enderecos_bitcoin **raiz,
       unsigned long int endereco_minerador = genRandLong(&rand) % NUM_ENDERECOS;
       bloco.data[183] = (unsigned char)endereco_minerador;
 
-      /* caso seja o bloco 1 eu passo 0 como parametro para o minerar já que ele
-       * nao tem nenhuma transacao. Esse valor é aquele que vai ser sorteado na
-       * funcao de gerar_transacoes_bloco, mas como é o primeiro eu posso passar
-       * 0 */
-      minerar_bloco(&bloco, hash, 0, est);
+      minerar_bloco(&bloco, hash);
       inserir_enderecos_com_bitcoins(raiz, endereco_minerador);
 
       sistema->carteira[(uint32_t)bloco.data[DATA_LENGTH - 1]] +=
           RECOMPENSA_MINERACAO;
-
-      for (int i = 0; i < DATA_LENGTH; i++) {
-        printf("%c ", bloco.data[i]);
-      }
     } else {
 
       /* Depois de gerar as transacoes do bloco a funcao vai chamar a funcao de
@@ -483,7 +474,8 @@ int main() {
 
   struct enderecos_bitcoin *raiz = NULL;
   struct bloco_minerado *blockchain = NULL;
-  struct estatisticas est = {0};
+  struct estatisticas est = {.maior_transacao = 0,
+                             .menor_transacao = MAX_TRANSACOES_BLOCO + 1};
 
   /* Struct que mantém controle de algumas estatisticas relevantes, bem como o
    * numero maximo de transacoes e o respectivo hash */
