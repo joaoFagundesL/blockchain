@@ -33,7 +33,7 @@ struct bloco_minerado {
 
 struct estatisticas {
   unsigned long int maior_transacao;
-  unsigned char hash[SHA256_DIGEST_LENGTH];
+  unsigned long int menor_transacao;
 };
 
 struct sistema_bitcoin {
@@ -61,6 +61,86 @@ void inserir_enderecos_com_bitcoins(struct enderecos_bitcoin **raiz,
   *raiz = novo;
 }
 
+int conta_enderecos(struct enderecos_bitcoin *raiz) {
+  size_t cont = 0;
+  if (!raiz)
+    return 0;
+  if (raiz)
+    while (raiz) {
+      raiz = raiz->prox;
+      cont++;
+    }
+  return cont;
+}
+
+void verificar_hash_com_menos_transacao(struct bloco_minerado *blockchain,
+                                        struct enderecos_bitcoin *raiz,
+                                        struct estatisticas *est) {
+  if (blockchain == NULL)
+    fprintf(stderr, "lista vazia\n");
+
+  struct bloco_minerado *tmp = blockchain;
+
+  printf("Menor numeros de transacoes = %lu nos hashs:\n",
+         est->menor_transacao);
+
+  while (tmp != NULL) {
+    int count = 0;
+    for (size_t i = 0; i < MAX_TRANSACOES_BLOCO; i++) {
+      uint32_t endereco_origem = tmp->bloco.data[i * 3];
+      uint32_t endereco_destino = tmp->bloco.data[i * 3 + 1];
+      uint32_t quantidade = tmp->bloco.data[i * 3 + 2];
+
+      if (endereco_origem == 0 && endereco_destino == 0 && quantidade == 0) {
+        break;
+      }
+
+      count++;
+    }
+
+    if (count == est->menor_transacao || tmp->bloco.numero == 1) {
+      for (size_t i = 0; i < SHA256_DIGEST_LENGTH; i++)
+        printf("%02x", tmp->hash[i]);
+      printf("\n");
+    }
+    tmp = tmp->prox;
+  }
+}
+
+void verificar_hash_com_mais_transacao(struct bloco_minerado *blockchain,
+                                       struct enderecos_bitcoin *raiz,
+                                       struct estatisticas *est) {
+  if (blockchain == NULL)
+    fprintf(stderr, "lista vazia\n");
+
+  struct bloco_minerado *tmp = blockchain;
+
+  printf("Maior numeros de transacoes = %lu nos hashs:\n",
+         est->maior_transacao);
+
+  while (tmp != NULL) {
+    int count = 0;
+    for (size_t i = 0; i < MAX_TRANSACOES_BLOCO; i++) {
+      uint32_t endereco_origem = tmp->bloco.data[i * 3];
+      uint32_t endereco_destino = tmp->bloco.data[i * 3 + 1];
+      uint32_t quantidade = tmp->bloco.data[i * 3 + 2];
+
+      if (endereco_origem == 0 && endereco_destino == 0 && quantidade == 0) {
+        break;
+      }
+
+      count++;
+    }
+
+    if (count == est->maior_transacao) {
+      for (size_t i = 0; i < SHA256_DIGEST_LENGTH; i++)
+        printf("%02x", tmp->hash[i]);
+      printf("\n");
+    }
+    tmp = tmp->prox;
+  }
+}
+
 void encontrar_maior_numero_bitcoins(uint32_t carteira[]) {
   int num_enderecos_max_bitcoins = 0;
   uint32_t max_bitcoins = 0;
@@ -84,11 +164,15 @@ void encontrar_maior_numero_bitcoins(uint32_t carteira[]) {
     }
   }
 
-  printf("Maior numero de bitcoins = %u nos seguintes enderecos | ",
+  printf("Maior numero de bitcoins = %u nos seguintes enderecos ",
          max_bitcoins);
 
   for (size_t i = 0; i < num_enderecos_max_bitcoins; i++)
-    printf("%u\n", enderecos_max_bitcoins[i]);
+    printf("%u ", enderecos_max_bitcoins[i]);
+  printf("\n");
+
+  free(enderecos_max_bitcoins);
+  enderecos_max_bitcoins = NULL;
 }
 
 int escolhe_carteira(struct enderecos_bitcoin *raiz, uint32_t indice) {
@@ -106,20 +190,8 @@ int escolhe_carteira(struct enderecos_bitcoin *raiz, uint32_t indice) {
     return 0;
 }
 
-int conta_enderecos(struct enderecos_bitcoin *raiz) {
-  size_t cont = 0;
-  if (!raiz)
-    return 0;
-  if (raiz)
-    while (raiz) {
-      raiz = raiz->prox;
-      cont++;
-    }
-  return cont;
-}
-
 void minerar_bloco(struct bloco_nao_minerado *bloco, unsigned char *hash,
-                   unsigned long int max_transacao, struct estatisticas *est) {
+                   unsigned long int num_transacao, struct estatisticas *est) {
   uint32_t nonce = 0;
 
   unsigned char
@@ -145,12 +217,12 @@ void minerar_bloco(struct bloco_nao_minerado *bloco, unsigned char *hash,
     nonce++;
   }
 
-  /* atualizar a struct estatisticas com o valor do hash e do bloco com maior
-   * numero de transacoes. So copia o hash depois de minerar o bloco para dar
-   * certo */
-  if (max_transacao > est->maior_transacao) {
-    est->maior_transacao = max_transacao;
-    memcpy(&(est->hash), hash, SHA256_DIGEST_LENGTH);
+  if (num_transacao > est->maior_transacao) {
+    est->maior_transacao = num_transacao;
+  }
+
+  if (num_transacao < est->menor_transacao) {
+    est->menor_transacao = num_transacao;
   }
 }
 
@@ -233,6 +305,9 @@ void imprimir_blocos_minerados(struct bloco_minerado *blockchain,
                                struct sistema_bitcoin sistema) {
   struct bloco_minerado *atual = blockchain;
 
+  /* O ponteiro atual representa o inicio da lista com todos os blocos minerados
+   */
+
   while (atual != NULL) {
     printf("Bloco %u:\n", atual->bloco.numero);
     printf("Hash do bloco: ");
@@ -246,12 +321,16 @@ void imprimir_blocos_minerados(struct bloco_minerado *blockchain,
 
     printf("\n");
     printf("Endereço do minerador: %u\n", atual->bloco.data[DATA_LENGTH - 1]);
+
+    /* Como o primeiro bloco nao tem transacoes eu so imprimo para os demais */
     if (atual->bloco.numero != 1) {
       for (int i = 0; i < MAX_TRANSACOES_BLOCO; i++) {
         uint32_t endereco_origem = atual->bloco.data[i * 3];
         uint32_t endereco_destino = atual->bloco.data[i * 3 + 1];
         uint32_t quantidade = atual->bloco.data[i * 3 + 2];
 
+        /* Para ter controle de quando as transacoes de um determinado bloco
+         * encerra. Ou seja se for tudo 0 nao tem mais transacoes */
         if (endereco_origem == 0 && endereco_destino == 0 && quantidade == 0)
           break;
 
@@ -264,6 +343,7 @@ void imprimir_blocos_minerados(struct bloco_minerado *blockchain,
     }
     printf("\n");
 
+    /* Avancando na lista */
     atual = atual->prox;
   }
 }
@@ -360,8 +440,7 @@ void processar_bloco(struct enderecos_bitcoin **raiz,
       size_t tamanho_mensagem = strlen(mensagem);
 
       memcpy(bloco.data, mensagem, tamanho_mensagem);
-      memset(bloco.data + tamanho_mensagem, 0,
-             sizeof(bloco.data) - tamanho_mensagem);
+      memset(bloco.data + tamanho_mensagem, 0, DATA_LENGTH - tamanho_mensagem);
 
       unsigned long int endereco_minerador = genRandLong(&rand) % NUM_ENDERECOS;
       bloco.data[183] = (unsigned char)endereco_minerador;
@@ -375,6 +454,10 @@ void processar_bloco(struct enderecos_bitcoin **raiz,
 
       sistema->carteira[(uint32_t)bloco.data[DATA_LENGTH - 1]] +=
           RECOMPENSA_MINERACAO;
+
+      for (int i = 0; i < DATA_LENGTH; i++) {
+        printf("%c ", bloco.data[i]);
+      }
     } else {
 
       /* Depois de gerar as transacoes do bloco a funcao vai chamar a funcao de
@@ -411,12 +494,8 @@ int main() {
   imprimir_blocos_minerados(blockchain, sistema);
   encontrar_maior_numero_bitcoins(sistema.carteira);
 
-  /* Imprimindo campos do struct estatisticas (fazer uma funcao separada) */
-  printf("maior transacao = %lu no hash ", est.maior_transacao);
-  for (int i = 0; i < SHA256_DIGEST_LENGTH; i++) {
-    printf("%02x", est.hash[i]);
-  }
-  printf("\n");
+  verificar_hash_com_menos_transacao(blockchain, raiz, &est);
+  verificar_hash_com_mais_transacao(blockchain, raiz, &est);
 
   free_blockchain(&blockchain);
 
