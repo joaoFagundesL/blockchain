@@ -47,9 +47,12 @@ struct sistema_bitcoin
 
 struct enderecos_bitcoin
 {
-  uint8_t chave;
+  uint32_t chave;
   struct enderecos_bitcoin *prox;
 };
+
+int checa_zero_bitcoin(struct enderecos_bitcoin **raiz,
+                       struct sistema_bitcoin *sistema);
 
 void iniciar_carteira(struct sistema_bitcoin *sistema)
 {
@@ -57,7 +60,7 @@ void iniciar_carteira(struct sistema_bitcoin *sistema)
 }
 
 void inserir_enderecos_com_bitcoins(struct enderecos_bitcoin **raiz,
-                                    uint8_t chave)
+                                    uint32_t chave)
 {
   struct enderecos_bitcoin *novo =
       (struct enderecos_bitcoin *)malloc(sizeof(struct enderecos_bitcoin));
@@ -204,7 +207,7 @@ void encontrar_maior_numero_bitcoins(uint32_t carteira[])
   enderecos_max_bitcoins = NULL;
 }
 
-int escolhe_carteira(struct enderecos_bitcoin *raiz, uint8_t indice)
+int escolhe_carteira(struct enderecos_bitcoin *raiz, uint32_t indice)
 {
   size_t i = 0;
   if (!raiz)
@@ -319,6 +322,13 @@ void gerar_transacoes_bloco(struct bloco_nao_minerado *bloco,
 
     sistema->carteira[endereco_origem] -= quantidade;
     carteira_auxiliar[endereco_destino] += quantidade;
+    if (conta_enderecos(*raiz) > 1)
+      checa_zero_bitcoin(raiz, sistema);
+    /*
+    FLAG_CHECA_CARTEIRAS = 0;
+    while (FLAG_CHECA_CARTEIRAS != 1)
+      FLAG_CHECA_CARTEIRAS = checa_zero_bitcoin(raiz, sistema);
+    */
 
     bloco->data[num_transacoes * 3] = endereco_origem;
     bloco->data[num_transacoes * 3 + 1] = endereco_destino;
@@ -345,7 +355,6 @@ void gerar_transacoes_bloco(struct bloco_nao_minerado *bloco,
   }
 
   minerar_bloco(bloco, hash);
-  inserir_enderecos_com_bitcoins(raiz, endereco_minerador);
 }
 
 void inserir_bloco(struct bloco_minerado **blockchain,
@@ -424,7 +433,7 @@ void imprimir_blocos_minerados(struct bloco_minerado *blockchain,
   }
 }
 
-void remove_no(struct enderecos_bitcoin **raiz, uint8_t chave)
+void remove_no(struct enderecos_bitcoin **raiz, uint32_t chave)
 {
   if (*raiz == NULL)
     return;
@@ -482,8 +491,8 @@ void imprime_lista(struct enderecos_bitcoin *raiz)
 {
   while (raiz != NULL)
   {
-    printf("%d ",
-           raiz->chave); // Supondo que o campo a ser impresso seja 'valor'
+    /* Supondo que o campo a ser impresso seja 'valor' */
+    printf("%d ", raiz->chave);
     raiz = raiz->prox;
   }
 
@@ -502,7 +511,8 @@ void free_blockchain(struct bloco_minerado **blockchain)
 
 void processar_bloco(struct enderecos_bitcoin **raiz,
                      struct bloco_minerado **blockchain,
-                     struct sistema_bitcoin *sistema)
+                     struct sistema_bitcoin *sistema,
+                     struct estatisticas *est)
 {
 
   struct bloco_nao_minerado bloco;
@@ -534,10 +544,13 @@ void processar_bloco(struct enderecos_bitcoin **raiz,
       bloco.data[183] = (unsigned char)endereco_minerador;
 
       minerar_bloco(&bloco, hash);
-      inserir_enderecos_com_bitcoins(raiz, endereco_minerador);
+
+      ++est->array_quantidade_de_blocos_minerados[endereco_minerador];
 
       sistema->carteira[(uint32_t)bloco.data[DATA_LENGTH - 1]] +=
           RECOMPENSA_MINERACAO;
+
+      inserir_enderecos_com_bitcoins(raiz, endereco_minerador);
     }
     else
     {
@@ -548,13 +561,18 @@ void processar_bloco(struct enderecos_bitcoin **raiz,
 
       sistema->carteira[(uint32_t)bloco.data[DATA_LENGTH - 1]] +=
           RECOMPENSA_MINERACAO;
+      if (sistema->carteira[(uint32_t)bloco.data[DATA_LENGTH - 1]] == 50)
+        inserir_enderecos_com_bitcoins(raiz, (uint32_t)bloco.data[DATA_LENGTH - 1]);
+      printf("%d\n", sistema->carteira[(uint32_t)bloco.data[DATA_LENGTH - 1]]);
     }
 
     inserir_bloco(blockchain, &bloco, hash);
 
     FLAG_CHECA_CARTEIRAS = 0;
-    while (FLAG_CHECA_CARTEIRAS != 1)
+    while (FLAG_CHECA_CARTEIRAS != 1 && conta_enderecos(*raiz) > 1)
+    {
       FLAG_CHECA_CARTEIRAS = checa_zero_bitcoin(raiz, sistema);
+    }
 
     memset(bloco.data, 0, sizeof(bloco.data));
     memcpy(hash_anterior, hash, SHA256_DIGEST_LENGTH);
@@ -578,6 +596,7 @@ int main()
   iniciar_carteira(&sistema);
   processar_bloco(&raiz, &blockchain, &sistema, &est);
   imprimir_blocos_minerados(blockchain, sistema);
+
   encontrar_maior_numero_bitcoins(sistema.carteira);
 
   verificar_hash_com_menos_transacao(blockchain, raiz, &est);
@@ -587,5 +606,10 @@ int main()
 
   free_blockchain(&blockchain);
 
+  /*
+  for (int i = 0; i < NUM_ENDERECOS; ++i)
+    if (sistema.carteira[i] > 0)
+      printf("Carteira: %d bitcoins: %d\n", i, sistema.carteira[i]);
+  */
   return EXIT_SUCCESS;
 }
