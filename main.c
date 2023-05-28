@@ -11,7 +11,7 @@
 #include <sys/types.h>
 #include <time.h>
 
-#define TOTAL_BLOCOS 1000
+#define TOTAL_BLOCOS 5
 #define MAX_TRANSACOES_BLOCO 61
 #define MAX_BITCOINS_TRANSACAO 100
 #define NUM_ENDERECOS 256
@@ -34,6 +34,7 @@ struct bloco_minerado {
 struct estatisticas {
   unsigned long int maior_transacao;
   unsigned long int menor_transacao;
+  int array_quantidade_de_blocos_minerados[NUM_ENDERECOS];
 };
 
 struct sistema_bitcoin {
@@ -71,16 +72,6 @@ int conta_enderecos(struct enderecos_bitcoin *raiz) {
       cont++;
     }
   return cont;
-}
-
-void numero_medio_bitcoins(struct bloco_minerado *blockchain) {
-  struct bloco_minerado *tmp = blockchain;
-
-  while (tmp != NULL) {
-    for (size_t i = 0; i < MAX_TRANSACOES_BLOCO; i++) {
-      uint32_t quantidade = tmp->bloco.data[i * 3 + 2];
-    }
-  }
 }
 
 void verificar_hash_com_menos_transacao(struct bloco_minerado *blockchain,
@@ -232,6 +223,31 @@ void minerar_bloco(struct bloco_nao_minerado *bloco, unsigned char *hash) {
   }
 }
 
+void atualizar_maior_menor_transacao(struct estatisticas *est,
+                                     unsigned long int num_transacoes) {
+  if (num_transacoes > est->maior_transacao)
+    est->maior_transacao = num_transacoes;
+
+  if (num_transacoes < est->menor_transacao)
+    est->menor_transacao = num_transacoes;
+}
+
+void endereco_com_mais_blocos_minerados(struct estatisticas est) {
+  int maior = 0;
+
+  for (int i = 0; i < NUM_ENDERECOS; i++) {
+    if (est.array_quantidade_de_blocos_minerados[i] > maior)
+      maior = est.array_quantidade_de_blocos_minerados[i];
+  }
+
+  printf("Maior quantidade de blocos minerados = %d nos enderecos:\n", maior);
+  for (int i = 0; i < NUM_ENDERECOS; i++) {
+    if (est.array_quantidade_de_blocos_minerados[i] == maior)
+      printf("%d ", i);
+  }
+  printf("\n");
+}
+
 void gerar_transacoes_bloco(struct bloco_nao_minerado *bloco,
                             struct sistema_bitcoin *sistema, MTRand *rand,
                             struct enderecos_bitcoin **raiz,
@@ -273,13 +289,12 @@ void gerar_transacoes_bloco(struct bloco_nao_minerado *bloco,
 
     num_transacoes++;
   }
-  if (num_transacoes > est->maior_transacao)
-    est->maior_transacao = num_transacoes;
 
-  if (num_transacoes < est->menor_transacao)
-    est->menor_transacao = num_transacoes;
+  atualizar_maior_menor_transacao(est, max_transacao);
 
   unsigned long int endereco_minerador = genRandLong(rand) % NUM_ENDERECOS;
+
+  ++est->array_quantidade_de_blocos_minerados[endereco_minerador];
 
   bloco->data[DATA_LENGTH - 1] = (unsigned char)endereco_minerador;
 
@@ -289,6 +304,7 @@ void gerar_transacoes_bloco(struct bloco_nao_minerado *bloco,
       inserir_enderecos_com_bitcoins(raiz, i);
     }
   }
+
   minerar_bloco(bloco, hash);
   inserir_enderecos_com_bitcoins(raiz, endereco_minerador);
 }
@@ -337,15 +353,12 @@ void imprimir_blocos_minerados(struct bloco_minerado *blockchain,
     printf("\n");
     printf("Endereço do minerador: %u\n", atual->bloco.data[DATA_LENGTH - 1]);
 
-    /* Como o primeiro bloco nao tem transacoes eu so imprimo para os demais */
     if (atual->bloco.numero != 1) {
       for (int i = 0; i < MAX_TRANSACOES_BLOCO; i++) {
         uint32_t endereco_origem = atual->bloco.data[i * 3];
         uint32_t endereco_destino = atual->bloco.data[i * 3 + 1];
         uint32_t quantidade = atual->bloco.data[i * 3 + 2];
 
-        /* Para ter controle de quando as transacoes de um determinado bloco
-         * encerra. Ou seja se for tudo 0 nao tem mais transacoes */
         if (endereco_origem == 0 && endereco_destino == 0 && quantidade == 0)
           break;
 
@@ -494,6 +507,9 @@ int main() {
   struct estatisticas est = {.maior_transacao = 0,
                              .menor_transacao = MAX_TRANSACOES_BLOCO + 1};
 
+  memset(est.array_quantidade_de_blocos_minerados, 0,
+         sizeof(est.array_quantidade_de_blocos_minerados));
+
   struct sistema_bitcoin sistema;
 
   iniciar_carteira(&sistema);
@@ -503,6 +519,8 @@ int main() {
 
   verificar_hash_com_menos_transacao(blockchain, raiz, &est);
   verificar_hash_com_mais_transacao(blockchain, raiz, &est);
+
+  endereco_com_mais_blocos_minerados(est);
 
   free_blockchain(&blockchain);
 
