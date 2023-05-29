@@ -13,11 +13,12 @@
 
 #define TOTAL_BLOCOS 16
 #define MAX_TRANSACOES_BLOCO 61
-#define MAX_BITCOINS_TRANSACAO 100
 #define NUM_ENDERECOS 256
 #define DATA_LENGTH 184
 #define RECOMPENSA_MINERACAO 50
 #define MAX_BLOCOS_BUFFER 16
+
+enum { BLOCO_GENESIS = 1 };
 
 struct bloco_nao_minerado {
   uint32_t numero;
@@ -138,8 +139,10 @@ void imprimir_bloco_arquivo_binario(const char *nome_arquivo) {
   struct bloco_minerado bloco;
   fread(&bloco, sizeof(struct bloco_minerado), 1, arquivo);
   printf("Bloco %u:\n", bloco.bloco.numero);
-  printf("Hash do bloco: ");
 
+  printf("Nonce: %u\n", bloco.bloco.nonce);
+
+  printf("Hash do bloco: ");
   for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
     printf("%02x", bloco.hash[i]);
 
@@ -151,7 +154,7 @@ void imprimir_bloco_arquivo_binario(const char *nome_arquivo) {
   printf("\n");
   printf("Endereço do minerador: %u\n", bloco.bloco.data[DATA_LENGTH - 1]);
 
-  if (bloco.bloco.numero != 1) {
+  if (bloco.bloco.numero != BLOCO_GENESIS) {
     for (int i = 0; i < MAX_TRANSACOES_BLOCO; i++) {
       uint32_t endereco_origem = bloco.bloco.data[i * 3];
       uint32_t endereco_destino = bloco.bloco.data[i * 3 + 1];
@@ -214,7 +217,7 @@ void verificar_hash_com_menos_transacao(struct bloco_minerado *blockchain,
          est->menor_transacao);
 
   while (tmp != NULL) {
-    if (tmp->bloco.numero == 1)
+    if (tmp->bloco.numero == BLOCO_GENESIS)
       tmp = tmp->prox;
 
     int count = 0;
@@ -230,7 +233,7 @@ void verificar_hash_com_menos_transacao(struct bloco_minerado *blockchain,
       count++;
     }
 
-    if (count == est->menor_transacao || tmp->bloco.numero == 1) {
+    if (count == est->menor_transacao || tmp->bloco.numero == BLOCO_GENESIS) {
       for (size_t i = 0; i < SHA256_DIGEST_LENGTH; i++)
         printf("%02x", tmp->hash[i]);
       printf("\n");
@@ -403,19 +406,12 @@ void gerar_transacoes_bloco(struct bloco_nao_minerado *bloco,
 
     uint32_t saldo_disponivel = sistema->carteira[endereco_origem];
 
-    do {
-      quantidade = genRandLong(rand) % (saldo_disponivel + 1);
-    } while (quantidade >= MAX_BITCOINS_TRANSACAO);
+    quantidade = genRandLong(rand) % (saldo_disponivel + 1);
 
     sistema->carteira[endereco_origem] -= quantidade;
     carteira_auxiliar[endereco_destino] += quantidade;
     if (conta_enderecos(*raiz) > 1)
       checa_zero_bitcoin(raiz, sistema);
-    /*
-    FLAG_CHECA_CARTEIRAS = 0;
-    while (FLAG_CHECA_CARTEIRAS != 1)
-      FLAG_CHECA_CARTEIRAS = checa_zero_bitcoin(raiz, sistema);
-    */
 
     bloco->data[num_transacoes * 3] = endereco_origem;
     bloco->data[num_transacoes * 3 + 1] = endereco_destino;
@@ -482,7 +478,7 @@ void imprimir_blocos_minerados(struct bloco_minerado *blockchain) {
     printf("\n");
     printf("Endereço do minerador: %u\n", atual->bloco.data[DATA_LENGTH - 1]);
 
-    if (atual->bloco.numero != 1) {
+    if (atual->bloco.numero != BLOCO_GENESIS) {
       for (int i = 0; i < MAX_TRANSACOES_BLOCO; i++) {
         uint32_t endereco_origem = atual->bloco.data[i * 3];
         uint32_t endereco_destino = atual->bloco.data[i * 3 + 1];
