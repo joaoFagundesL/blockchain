@@ -11,12 +11,13 @@
 #include <sys/types.h>
 #include <time.h>
 
-#define TOTAL_BLOCOS 5
+#define TOTAL_BLOCOS 32
 #define MAX_TRANSACOES_BLOCO 61
 #define MAX_BITCOINS_TRANSACAO 100
 #define NUM_ENDERECOS 256
 #define DATA_LENGTH 184
 #define RECOMPENSA_MINERACAO 50
+#define MAX_BLOCOS_BUFFER 16
 
 struct bloco_nao_minerado {
   uint32_t numero;
@@ -45,6 +46,71 @@ struct enderecos_bitcoin {
   uint32_t chave;
   struct enderecos_bitcoin *prox;
 };
+
+void insere_arquivo(struct bloco_minerado **blockchain,
+                    const char *nomeArquivo) {
+  FILE *arquivo = fopen(nomeArquivo, "wb");
+  if (arquivo == NULL) {
+    fprintf(stderr, "Erro ao abrir o arquivo!");
+    return;
+  }
+
+  if (blockchain == NULL || *blockchain == NULL) {
+    fprintf(stderr, "Blockchain vazio!");
+    fclose(arquivo);
+    return;
+  }
+
+  struct bloco_minerado *bloco_atual = *blockchain;
+  struct bloco_minerado buffer[MAX_BLOCOS_BUFFER];
+  int contador = 0;
+
+  while (bloco_atual != NULL) {
+    if (contador < MAX_BLOCOS_BUFFER) {
+      buffer[contador] = *bloco_atual;
+      contador++;
+    } else {
+      fwrite(buffer, sizeof(struct bloco_minerado), contador, arquivo);
+      contador = 0;
+      continue;
+    }
+
+    bloco_atual = bloco_atual->prox;
+  }
+
+  if (contador > 0)
+    fwrite(buffer, sizeof(struct bloco_minerado), contador, arquivo);
+
+  fclose(arquivo);
+}
+
+struct bloco_minerado *le_arquivo(const char *nomeArquivo) {
+  FILE *arquivo = fopen(nomeArquivo, "rb");
+  if (arquivo == NULL) {
+    fprintf(stderr, "Erro ao abrir o arquivo!");
+    return NULL;
+  }
+
+  fseek(arquivo, 0, SEEK_END);
+  long tamanho_arquivo = ftell(arquivo);
+  rewind(arquivo);
+
+  int num_blocos = tamanho_arquivo / sizeof(struct bloco_minerado);
+
+  struct bloco_minerado *blockchain = (struct bloco_minerado *)malloc(
+      num_blocos * sizeof(struct bloco_minerado));
+  if (blockchain == NULL) {
+    fprintf(stderr, "Erro ao alocar memória!");
+    fclose(arquivo);
+    return NULL;
+  }
+
+  fread(blockchain, sizeof(struct bloco_minerado), num_blocos, arquivo);
+
+  fclose(arquivo);
+
+  return blockchain;
+}
 
 int checa_zero_bitcoin(struct enderecos_bitcoin **raiz,
                        struct sistema_bitcoin *sistema);
@@ -78,7 +144,6 @@ int conta_enderecos(struct enderecos_bitcoin *raiz) {
 }
 
 void verificar_hash_com_menos_transacao(struct bloco_minerado *blockchain,
-                                        struct enderecos_bitcoin *raiz,
                                         struct estatisticas *est) {
   if (blockchain == NULL)
     fprintf(stderr, "lista vazia\n");
@@ -115,8 +180,8 @@ void verificar_hash_com_menos_transacao(struct bloco_minerado *blockchain,
 }
 
 void verificar_hash_com_mais_transacao(struct bloco_minerado *blockchain,
-                                       struct enderecos_bitcoin *raiz,
                                        struct estatisticas *est) {
+
   if (blockchain == NULL)
     fprintf(stderr, "lista vazia\n");
 
@@ -262,8 +327,6 @@ void gerar_transacoes_bloco(struct bloco_nao_minerado *bloco,
       genRandLong(rand) % (MAX_TRANSACOES_BLOCO + 1);
 
   while (num_transacoes < max_transacao) {
-    size_t num_enderecos_com_bitcoins = 0;
-
     int valor_lista_origem = genRandLong(rand) % (conta_enderecos(*raiz));
 
     unsigned long int endereco_origem =
@@ -340,11 +403,11 @@ void inserir_bloco(struct bloco_minerado **blockchain,
   }
 }
 
-void imprimir_blocos_minerados(struct bloco_minerado *blockchain,
-                               struct sistema_bitcoin sistema) {
+void imprimir_blocos_minerados(struct bloco_minerado *blockchain) {
   struct bloco_minerado *atual = blockchain;
 
-  /* O ponteiro atual representa o inicio da lista com todos os blocos minerados
+  /* O ponteiro atual representa o inicio da lista com todos os blocos
+  minerados
    */
 
   while (atual != NULL) {
@@ -497,10 +560,10 @@ void processar_bloco(struct enderecos_bitcoin **raiz,
 
       sistema->carteira[(uint32_t)bloco.data[DATA_LENGTH - 1]] +=
           RECOMPENSA_MINERACAO;
+
       if (sistema->carteira[(uint32_t)bloco.data[DATA_LENGTH - 1]] == 50)
         inserir_enderecos_com_bitcoins(raiz,
                                        (uint32_t)bloco.data[DATA_LENGTH - 1]);
-      printf("%d\n", sistema->carteira[(uint32_t)bloco.data[DATA_LENGTH - 1]]);
     }
 
     inserir_bloco(blockchain, &bloco, hash);
@@ -530,21 +593,21 @@ int main() {
 
   iniciar_carteira(&sistema);
   processar_bloco(&raiz, &blockchain, &sistema, &est);
-  imprimir_blocos_minerados(blockchain, sistema);
 
   encontrar_maior_numero_bitcoins(sistema.carteira);
 
-  verificar_hash_com_menos_transacao(blockchain, raiz, &est);
-  verificar_hash_com_mais_transacao(blockchain, raiz, &est);
+  verificar_hash_com_menos_transacao(blockchain, &est);
+  verificar_hash_com_mais_transacao(blockchain, &est);
 
   endereco_com_mais_blocos_minerados(est);
 
+  insere_arquivo(&blockchain, "blocos.bin");
+
+  struct bloco_minerado *test = le_arquivo("blocos.bin");
+
+  imprimir_blocos_minerados(test);
+
   free_blockchain(&blockchain);
 
-  /*
-  for (int i = 0; i < NUM_ENDERECOS; ++i)
-    if (sistema.carteira[i] > 0)
-      printf("Carteira: %d bitcoins: %d\n", i, sistema.carteira[i]);
-  */
   return EXIT_SUCCESS;
 }
