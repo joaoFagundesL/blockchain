@@ -11,7 +11,7 @@
 #include <sys/types.h>
 #include <time.h>
 
-#define TOTAL_BLOCOS 50
+#define TOTAL_BLOCOS 25
 #define MAX_TRANSACOES_BLOCO 61
 #define NUM_ENDERECOS 256
 #define DATA_LENGTH 184
@@ -225,8 +225,10 @@ void imprimir_blocos_endereco(const char *nome_arquivo,
 
       printf("\n");
 
+      if (blocos_impressos >= n)
+        break;
+
       blocos_impressos++;
-      rewind(arquivo);
     }
   }
 
@@ -468,28 +470,16 @@ int escolhe_carteira(struct enderecos_bitcoin *raiz, uint32_t indice) {
 void minerar_bloco(struct bloco_nao_minerado *bloco, unsigned char *hash) {
   uint32_t nonce = 0;
 
-  unsigned char
-      bloco_completo[sizeof(struct bloco_nao_minerado) + sizeof(uint32_t)];
-
   unsigned char hash_result[SHA256_DIGEST_LENGTH];
 
-  while (nonce < UINT32_MAX) {
-    memcpy(bloco_completo, bloco, sizeof(struct bloco_nao_minerado));
-
-    memcpy(bloco_completo + sizeof(struct bloco_nao_minerado), &nonce,
-           sizeof(uint32_t));
-
-    SHA256(bloco_completo, sizeof(struct bloco_nao_minerado) + sizeof(uint32_t),
+  do {
+    bloco->nonce = nonce;
+    SHA256((unsigned char *)bloco, sizeof(struct bloco_nao_minerado),
            hash_result);
-
-    if (hash_result[0] == 0) {
-      memcpy(hash, hash_result, SHA256_DIGEST_LENGTH);
-      bloco->nonce = nonce;
-      break;
-    }
-
     nonce++;
-  }
+  } while (hash_result[0] != 0);
+
+  memcpy(hash, hash_result, SHA256_DIGEST_LENGTH);
 }
 
 void atualizar_maior_menor_transacao(struct estatisticas *est,
@@ -789,7 +779,7 @@ int main() {
   criar_arquivo_indice("blocos.bin", "indices.bin");
   struct bloco_minerado *test = le_arquivo("blocos.bin");
 
-  imprimir_blocos_minerados(test);
+  imprimir_blocos_minerados(blockchain);
 
   char opcao;
   while (1) {
