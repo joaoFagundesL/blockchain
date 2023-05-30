@@ -11,7 +11,7 @@
 #include <sys/types.h>
 #include <time.h>
 
-#define TOTAL_BLOCOS 25
+#define TOTAL_BLOCOS 100
 #define MAX_TRANSACOES_BLOCO 61
 #define NUM_ENDERECOS 256
 #define DATA_LENGTH 184
@@ -51,6 +51,7 @@ struct enderecos_bitcoin {
 struct indice_registro {
   int endereco;
   long offset;
+  // int numero_bloco;
 };
 
 void insere_arquivo(struct bloco_minerado **blockchain,
@@ -133,24 +134,19 @@ void criar_arquivo_indice(const char *nomeArquivo,
     return;
   }
 
-  struct bloco_minerado buffer[MAX_BLOCOS_BUFFER];
-  struct indice_registro registros[MAX_BLOCOS_BUFFER];
+  struct bloco_minerado bloco;
+  struct indice_registro registro;
   int contador = 0;
 
-  while (fread(&buffer[contador], sizeof(struct bloco_minerado), 1, arquivo) >
-         0) {
-    registros[contador].endereco = buffer[contador].bloco.data[DATA_LENGTH - 1];
-    registros[contador].offset = contador * sizeof(struct bloco_minerado);
+  while (fread(&bloco, sizeof(struct bloco_minerado), 1, arquivo) > 0) {
+    registro.endereco = bloco.bloco.data[DATA_LENGTH - 1];
+    // registro.numero_bloco = bloco.bloco.numero;
+    registro.offset = contador * sizeof(struct bloco_minerado);
+
+    fwrite(&registro, sizeof(struct indice_registro), 1, indice);
+
     contador++;
-
-    if (contador == MAX_BLOCOS_BUFFER) {
-      fwrite(registros, sizeof(struct indice_registro), contador, indice);
-      contador = 0;
-    }
   }
-
-  if (contador > 0)
-    fwrite(registros, sizeof(struct indice_registro), contador, indice);
 
   fclose(arquivo);
   fclose(indice);
@@ -779,7 +775,7 @@ int main() {
   criar_arquivo_indice("blocos.bin", "indices.bin");
   struct bloco_minerado *test = le_arquivo("blocos.bin");
 
-  imprimir_blocos_minerados(blockchain);
+  // imprimir_blocos_minerados(blockchain);
 
   char opcao;
   while (1) {
