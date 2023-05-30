@@ -11,7 +11,7 @@
 #include <sys/types.h>
 #include <time.h>
 
-#define TOTAL_BLOCOS 16
+#define TOTAL_BLOCOS 50
 #define MAX_TRANSACOES_BLOCO 61
 #define NUM_ENDERECOS 256
 #define DATA_LENGTH 184
@@ -46,6 +46,11 @@ struct sistema_bitcoin {
 struct enderecos_bitcoin {
   uint32_t chave;
   struct enderecos_bitcoin *prox;
+};
+
+struct indice_registro {
+  int endereco;
+  long offset;
 };
 
 void insere_arquivo(struct bloco_minerado **blockchain,
@@ -111,6 +116,138 @@ struct bloco_minerado *le_arquivo(const char *nomeArquivo) {
   fclose(arquivo);
 
   return blockchain;
+}
+
+void criar_arquivo_indice(const char *nomeArquivo,
+                          const char *nomeArquivoIndice) {
+  FILE *arquivo = fopen(nomeArquivo, "rb");
+  if (arquivo == NULL) {
+    fprintf(stderr, "Erro ao abrir o arquivo de dados!");
+    return;
+  }
+
+  FILE *indice = fopen(nomeArquivoIndice, "wb");
+  if (indice == NULL) {
+    fclose(arquivo);
+    fprintf(stderr, "Erro ao abrir o arquivo de índice!");
+    return;
+  }
+
+  struct bloco_minerado buffer[MAX_BLOCOS_BUFFER];
+  struct indice_registro registros[MAX_BLOCOS_BUFFER];
+  int contador = 0;
+
+  while (fread(&buffer[contador], sizeof(struct bloco_minerado), 1, arquivo) >
+         0) {
+    registros[contador].endereco = buffer[contador].bloco.data[DATA_LENGTH - 1];
+    registros[contador].offset = contador * sizeof(struct bloco_minerado);
+    contador++;
+
+    if (contador == MAX_BLOCOS_BUFFER) {
+      fwrite(registros, sizeof(struct indice_registro), contador, indice);
+      contador = 0;
+    }
+  }
+
+  if (contador > 0)
+    fwrite(registros, sizeof(struct indice_registro), contador, indice);
+
+  fclose(arquivo);
+  fclose(indice);
+}
+
+void imprimir_blocos_endereco(const char *nome_arquivo,
+                              const char *nome_arquivo_indice) {
+
+  FILE *arquivo = fopen(nome_arquivo, "rb");
+  if (arquivo == NULL) {
+    fprintf(stderr, "Erro ao abrir o arquivo de dados!");
+    return;
+  }
+
+  FILE *indice = fopen(nome_arquivo_indice, "rb");
+  if (indice == NULL) {
+    fclose(arquivo);
+    fprintf(stderr, "Erro ao abrir o arquivo de índice!");
+    return;
+  }
+
+  int endereco;
+  printf("Informe o endereco desejado: ");
+  scanf("%d", &endereco);
+
+  int n;
+  printf("Informe a quantidade de blocos: ");
+  scanf("%d", &n);
+  printf("\n");
+
+  struct indice_registro registro;
+  struct bloco_minerado bloco;
+  int blocos_impressos = 0;
+
+  while (blocos_impressos < n &&
+         fread(&registro, sizeof(struct indice_registro), 1, indice) > 0) {
+
+    if (registro.endereco == endereco) {
+      fseek(arquivo, registro.offset, SEEK_SET);
+      fread(&bloco, sizeof(struct bloco_minerado), 1, arquivo);
+
+      printf("Bloco %d\n", bloco.bloco.numero);
+      printf("Nonce = %u\n", bloco.bloco.nonce);
+
+      printf("Hash: ");
+      for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
+        printf("%02x", bloco.hash[i]);
+      printf("\n");
+
+      printf("Hash anterior: ");
+      for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
+        printf("%02x", bloco.bloco.hash_anterior[i]);
+      printf("\n");
+
+      printf("Endereco do minerador = %d\n", bloco.bloco.data[DATA_LENGTH - 1]);
+      if (bloco.bloco.numero != BLOCO_GENESIS) {
+        for (int i = 0; i < MAX_TRANSACOES_BLOCO; i++) {
+          uint32_t endereco_origem = bloco.bloco.data[i * 3];
+          uint32_t endereco_destino = bloco.bloco.data[i * 3 + 1];
+          uint32_t quantidade = bloco.bloco.data[i * 3 + 2];
+
+          if (endereco_origem == 0 && endereco_destino == 0 && quantidade == 0)
+            break;
+
+          printf("Transação %d:\n", i + 1);
+
+          printf("endereco de origem: %u\n", endereco_origem);
+          printf("endereco de destino: %u\n", endereco_destino);
+          printf("quantidade transferida: %u\n\n", quantidade);
+        }
+      }
+
+      printf("\n");
+
+      blocos_impressos++;
+      rewind(arquivo);
+    }
+  }
+
+  fclose(arquivo);
+  fclose(indice);
+}
+
+void imprimir_arquivo_indice(const char *nomeArquivoIndice) {
+  FILE *indice = fopen(nomeArquivoIndice, "rb");
+  if (indice == NULL) {
+    fprintf(stderr, "Erro ao abrir o arquivo de índice!");
+    return;
+  }
+
+  struct indice_registro registro;
+
+  while (fread(&registro, sizeof(struct indice_registro), 1, indice) > 0) {
+    printf("Endereco: %d, Offset: %ld\n", registro.endereco, registro.offset);
+  }
+
+  fclose(indice);
 }
 
 void imprimir_bloco_arquivo_binario(const char *nome_arquivo) {
@@ -607,8 +744,8 @@ void processar_bloco(struct enderecos_bitcoin **raiz,
       inserir_enderecos_com_bitcoins(raiz, endereco_minerador);
     } else {
 
-      /* Depois de gerar as transacoes do bloco a funcao vai chamar a funcao de
-       * minerar com os parametros corretos */
+      /* Depois de gerar as transacoes do bloco a funcao vai chamar a funcao
+       * de minerar com os parametros corretos */
       gerar_transacoes_bloco(&bloco, sistema, &rand, raiz, est, hash);
 
       sistema->carteira[(uint32_t)bloco.data[DATA_LENGTH - 1]] +=
@@ -649,8 +786,10 @@ int main() {
 
   insere_arquivo(&blockchain, "blocos.bin");
 
+  criar_arquivo_indice("blocos.bin", "indices.bin");
   struct bloco_minerado *test = le_arquivo("blocos.bin");
-  // imprimir_blocos_minerados(blockchain);
+
+  imprimir_blocos_minerados(test);
 
   char opcao;
   while (1) {
@@ -659,8 +798,9 @@ int main() {
            "=> Hash do bloco com mais transacoes e o numero de transacoes "
            "\n[d] => Hash com menos transacoes e o numero de transacoes\n[e] "
            "=> Quantidade media de bitcoins por bloco\n[f] => Imprimir todos "
-           "os campos de um dado "
-           "bloco\n============================================================"
+           "os campos de um dado bloco\n[g] => Imprimir os n blocos "
+           "minerados a partir de um endereco\n"
+           "============================================================"
            "==\n--> ");
 
     scanf(" %c", &opcao);
@@ -676,10 +816,13 @@ int main() {
       printf("todo");
     else if (opcao == 'f')
       imprimir_bloco_arquivo_binario("blocos.bin");
+    else if (opcao == 'g')
+      imprimir_blocos_endereco("blocos.bin", "indices.bin");
     else
       break;
   }
 
+  imprimir_arquivo_indice("indices.bin");
   free_blockchain(&blockchain);
 
   return EXIT_SUCCESS;
