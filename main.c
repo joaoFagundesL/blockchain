@@ -864,19 +864,27 @@ void inserir_bloco(struct bloco_minerado **blockchain,
 void imprimir_blocos_minerados(struct bloco_minerado *blockchain) {
   struct bloco_minerado *atual = blockchain;
 
+  const char *filename = "blocos.txt";
+  FILE *file = fopen(filename, "w");
+  if (file == NULL) {
+    fprintf(stderr, "erro ao abrir arquivo\n");
+    exit(EXIT_FAILURE);
+  }
+
   while (atual != NULL) {
-    printf("Bloco %u:\n", atual->bloco.numero);
-    printf("Hash do bloco: ");
+    fprintf(file, "Bloco %u:\n", atual->bloco.numero);
+    fprintf(file, "Hash do bloco: ");
     for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
-      printf("%02x", atual->hash[i]);
+      fprintf(file, "%02x", atual->hash[i]);
 
-    printf("\n");
-    printf("Hash anterior: ");
+    fprintf(file, "\n");
+    fprintf(file, "Hash anterior: ");
     for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
-      printf("%02x", atual->bloco.hash_anterior[i]);
+      fprintf(file, "%02x", atual->bloco.hash_anterior[i]);
 
-    printf("\n");
-    printf("Endereço do minerador: %u\n", atual->bloco.data[DATA_LENGTH - 1]);
+    fprintf(file, "\n");
+    fprintf(file, "Endereço do minerador: %u\n",
+            atual->bloco.data[DATA_LENGTH - 1]);
 
     if (atual->bloco.numero != BLOCO_GENESIS) {
       for (int i = 0; i < MAX_TRANSACOES_BLOCO; i++) {
@@ -888,14 +896,14 @@ void imprimir_blocos_minerados(struct bloco_minerado *blockchain) {
         if (endereco_origem == 0 && endereco_destino == 0 && quantidade == 0)
           break;
 
-        printf("Transação %d:\n", i + 1);
+        fprintf(file, "Transação %d:\n", i + 1);
 
-        printf("endereco de origem: %u\n", endereco_origem);
-        printf("endereco de destino: %u\n", endereco_destino);
-        printf("quantidade transferida: %u\n\n", quantidade);
+        fprintf(file, "endereco de origem: %u\n", endereco_origem);
+        fprintf(file, "endereco de destino: %u\n", endereco_destino);
+        fprintf(file, "quantidade transferida: %u\n\n", quantidade);
       }
     }
-    printf("\n");
+    fprintf(file, "\n");
 
     atual = atual->prox;
   }
@@ -1001,12 +1009,21 @@ int main() {
   iniciar_carteira(&sistema);
   processar_bloco(&raiz, &blockchain, &sistema, &est);
 
+  /* Armazena os blocos de forma sequencial */
   insere_arquivo(&blockchain, "blocos.bin");
+
+  /* Cria o arquivo indices.bin com base no endereco do minerador */
   criar_arquivo_indice("blocos.bin", "indices.bin");
+
+  /* Cria o arquivo indices_nonce.bin com base nos nonces */
   criar_arquivo_indice_nonce("blocos.bin", "indices_nonce.bin");
 
+  /* Funcao de teste para saber se os dados foram inseridos corretamente, no
+   * caso passaria a struct para a funcao de imprimir */
   // struct bloco_minerado *test = le_arquivo("blocos.bin");
-  // imprimir_blocos_minerados(blockchain);
+
+  /* Escrece os blocos em um txt */
+  imprimir_blocos_minerados(blockchain);
 
   char opcao;
   while (1) {
@@ -1016,7 +1033,9 @@ int main() {
            "\n[d] => Hash com menos transacoes e o numero de transacoes\n[e] "
            "=> Quantidade media de bitcoins por bloco\n[f] => Imprimir todos "
            "os campos de um dado bloco\n[g] => Imprimir os n blocos "
-           "minerados a partir de um endereco\n[i] => Imprimir todos os "
+           "minerados a partir de um endereco\n[h] => Imprimir os n primeiros "
+           "blocos em ordem crescente de quantidade de transacoes\n[i] => "
+           "Imprimir todos os "
            "blocos de um dado nonce\n"
            "============================================================"
            "==\n--> ");
