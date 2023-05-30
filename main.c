@@ -23,6 +23,12 @@
  * 4096 / 16 = 256. Assim eu envio um buffer de 256 posicoes de uma vez só */
 #define MAX_ENDERECO_BUFFER 256
 
+/* Mesma logica do define acima. Eu ja tenho defines com valores 256 mas nao
+ * posso usar eles ao longo do programa, pois se um define mudar automaticamente
+ * o calculo dos sizeofs pode ser afetados, por isso tem defines com valores
+ * repetidos */
+#define MAX_NONCE_BUFFER 256
+
 /* Apenas para manter o controle de quem é o bloco genesis */
 enum { BLOCO_GENESIS = 1 };
 
@@ -63,6 +69,12 @@ struct enderecos_bitcoin {
 /* Struct de 16bytes utilizada para criar o arquivo de indice do minerador */
 struct indice_registro {
   int endereco;
+  long offset;
+};
+
+/*  Struct 16 bytes para criar o arquivo de indice do nonce */
+struct indice_nonce {
+  uint32_t nonce;
   long offset;
 };
 
@@ -203,6 +215,143 @@ void criar_arquivo_indice(const char *nome_arquivo,
   fclose(indice);
 }
 
+/* Vou utilizar a mesma logica para construir o arquivo de indice do nonce */
+void criar_arquivo_indice_nonce(const char *nome_arquivo,
+                                const char *nome_arquivo_indice) {
+
+  /* Ler os dados do arquivo que possui os blocos */
+  FILE *arquivo = fopen(nome_arquivo, "rb");
+  if (arquivo == NULL) {
+    fprintf(stderr, "Erro ao abrir o arquivo de dados!");
+    return;
+  }
+
+  /* Criando o arquivo de indice dos mineradores */
+  FILE *indice = fopen(nome_arquivo_indice, "wb");
+  if (indice == NULL) {
+    fclose(arquivo);
+    fprintf(stderr, "Erro ao abrir o arquivo de índice!");
+    return;
+  }
+  struct bloco_minerado bloco;
+  struct indice_nonce registros[MAX_NONCE_BUFFER];
+  int contador = 0;
+
+  /* A leitura eu faço com base no arquivo que ja tenho sequencialmente
+   * construido */
+  while (fread(&bloco, sizeof(struct bloco_minerado), 1, arquivo) > 0) {
+    registros[contador].nonce = bloco.bloco.nonce;
+
+    registros[contador].offset = contador * sizeof(struct bloco_minerado);
+
+    contador++;
+
+    if (contador == MAX_NONCE_BUFFER) {
+      fwrite(registros, sizeof(struct indice_registro), contador, indice);
+      contador = 0;
+    }
+  }
+
+  if (contador > 0)
+    fwrite(registros, sizeof(struct indice_registro), contador, indice);
+
+  fclose(arquivo);
+  fclose(indice);
+}
+
+/* Funcao para mostrar os dados de um código para evitar ficar repetindo toda
+ * hora */
+void exibir_dados_bloco(struct bloco_minerado bloco) {
+
+  printf("Bloco %d\n", bloco.bloco.numero);
+  printf("Nonce = %u\n", bloco.bloco.nonce);
+
+  printf("Hash: ");
+  for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
+    printf("%02x", bloco.hash[i]);
+  printf("\n");
+
+  printf("Hash anterior: ");
+  for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
+    printf("%02x", bloco.bloco.hash_anterior[i]);
+  printf("\n");
+
+  printf("Endereco do minerador = %d\n", bloco.bloco.data[DATA_LENGTH - 1]);
+
+  /* Só imprime transacao se nao for o genesis */
+  if (bloco.bloco.numero != BLOCO_GENESIS) {
+    for (int i = 0; i < MAX_TRANSACOES_BLOCO; i++) {
+      uint32_t endereco_origem = bloco.bloco.data[i * 3];
+      uint32_t endereco_destino = bloco.bloco.data[i * 3 + 1];
+      uint32_t quantidade = bloco.bloco.data[i * 3 + 2];
+
+      if (endereco_origem == 0 && endereco_destino == 0 && quantidade == 0)
+        break;
+
+      printf("Transação %d:\n", i + 1);
+
+      printf("endereco de origem: %u\n", endereco_origem);
+      printf("endereco de destino: %u\n", endereco_destino);
+      printf("quantidade transferida: %u\n\n", quantidade);
+    }
+  }
+
+  printf("\n");
+}
+
+void imprimir_blocos_nonce(const char *nome_arquivo,
+                           const char *nome_arquivo_indice) {
+  /* Arquivo com os blocos armazenados sequencialmente */
+  FILE *arquivo = fopen(nome_arquivo, "rb");
+  if (arquivo == NULL) {
+    fprintf(stderr, "Erro ao abrir o arquivo de dados!");
+    return;
+  }
+
+  /* Arquivo de indice que foi criado */
+  FILE *indice = fopen(nome_arquivo_indice, "rb");
+  if (indice == NULL) {
+    fclose(arquivo);
+    fprintf(stderr, "Erro ao abrir o arquivo de índice!");
+    return;
+  }
+
+  /* Leitura de dados */
+  uint32_t nonce;
+  printf("Informe o nonce desejado: ");
+  scanf("%u", &nonce);
+
+  struct indice_nonce registro;
+  struct bloco_minerado bloco;
+
+  /* Controle para imprimir os dados de acordo com o n fornecido pelo usuario*/
+  int blocos_impressos = 0;
+
+  while (fread(&registro, sizeof(struct indice_registro), 1, indice) > 0) {
+
+    if (registro.nonce == nonce) {
+
+      /* Uso o offset e ja vou direto para o bloco desejado no meu arquivo */
+      fseek(arquivo, registro.offset, SEEK_SET);
+
+      /* Leio o bloco que estava naquele offset */
+      fread(&bloco, sizeof(struct bloco_minerado), 1, arquivo);
+
+      /* Imprimir todos os dados daquele bloco */
+      exibir_dados_bloco(bloco);
+
+      blocos_impressos++;
+    }
+  }
+
+  if (blocos_impressos == 0) {
+    fprintf(stderr, "Nenhum bloco com o nonce informado!\n\n");
+  }
+
+  fclose(arquivo);
+  fclose(indice);
+}
+
 void imprimir_blocos_endereco(const char *nome_arquivo,
                               const char *nome_arquivo_indice) {
 
@@ -249,40 +398,7 @@ void imprimir_blocos_endereco(const char *nome_arquivo,
       fread(&bloco, sizeof(struct bloco_minerado), 1, arquivo);
 
       /* Imprimir todos os dados daquele bloco */
-      printf("Bloco %d\n", bloco.bloco.numero);
-      printf("Nonce = %u\n", bloco.bloco.nonce);
-
-      printf("Hash: ");
-      for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
-        printf("%02x", bloco.hash[i]);
-      printf("\n");
-
-      printf("Hash anterior: ");
-      for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
-        printf("%02x", bloco.bloco.hash_anterior[i]);
-      printf("\n");
-
-      printf("Endereco do minerador = %d\n", bloco.bloco.data[DATA_LENGTH - 1]);
-
-      /* Só imprime transacao se nao for o genesis */
-      if (bloco.bloco.numero != BLOCO_GENESIS) {
-        for (int i = 0; i < MAX_TRANSACOES_BLOCO; i++) {
-          uint32_t endereco_origem = bloco.bloco.data[i * 3];
-          uint32_t endereco_destino = bloco.bloco.data[i * 3 + 1];
-          uint32_t quantidade = bloco.bloco.data[i * 3 + 2];
-
-          if (endereco_origem == 0 && endereco_destino == 0 && quantidade == 0)
-            break;
-
-          printf("Transação %d:\n", i + 1);
-
-          printf("endereco de origem: %u\n", endereco_origem);
-          printf("endereco de destino: %u\n", endereco_destino);
-          printf("quantidade transferida: %u\n\n", quantidade);
-        }
-      }
-
-      printf("\n");
+      exibir_dados_bloco(bloco);
 
       if (blocos_impressos >= n)
         break;
@@ -290,6 +406,9 @@ void imprimir_blocos_endereco(const char *nome_arquivo,
       blocos_impressos++;
     }
   }
+
+  if (blocos_impressos == 0)
+    fprintf(stderr, "Nenhum bloco encontrado!\n\n");
 
   fclose(arquivo);
   fclose(indice);
@@ -345,39 +464,9 @@ void imprimir_bloco_arquivo_binario(const char *nome_arquivo) {
   /* Agora basta ler e imprimir as informacoes */
   struct bloco_minerado bloco;
   fread(&bloco, sizeof(struct bloco_minerado), 1, arquivo);
-  printf("Bloco %u:\n", bloco.bloco.numero);
 
-  printf("Nonce: %u\n", bloco.bloco.nonce);
-
-  printf("Hash do bloco: ");
-  for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
-    printf("%02x", bloco.hash[i]);
-
+  exibir_dados_bloco(bloco);
   printf("\n");
-  printf("Hash anterior: ");
-  for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
-    printf("%02x", bloco.bloco.hash_anterior[i]);
-
-  printf("\n");
-  printf("Endereço do minerador: %u\n", bloco.bloco.data[DATA_LENGTH - 1]);
-
-  if (bloco.bloco.numero != BLOCO_GENESIS) {
-    for (int i = 0; i < MAX_TRANSACOES_BLOCO; i++) {
-      uint32_t endereco_origem = bloco.bloco.data[i * 3];
-      uint32_t endereco_destino = bloco.bloco.data[i * 3 + 1];
-      uint32_t quantidade = bloco.bloco.data[i * 3 + 2];
-
-      if (endereco_origem == 0 && endereco_destino == 0 && quantidade == 0)
-        break;
-
-      printf("Transação %d:\n", i + 1);
-
-      printf("endereco de origem: %u\n", endereco_origem);
-      printf("endereco de destino: %u\n", endereco_destino);
-      printf("quantidade transferida: %u\n\n", quantidade);
-    }
-  }
-  printf("\n\n");
 
   fclose(arquivo);
 }
@@ -913,11 +1002,11 @@ int main() {
   processar_bloco(&raiz, &blockchain, &sistema, &est);
 
   insere_arquivo(&blockchain, "blocos.bin");
-
   criar_arquivo_indice("blocos.bin", "indices.bin");
-  struct bloco_minerado *test = le_arquivo("blocos.bin");
+  criar_arquivo_indice_nonce("blocos.bin", "indices_nonce.bin");
 
-  imprimir_blocos_minerados(blockchain);
+  // struct bloco_minerado *test = le_arquivo("blocos.bin");
+  // imprimir_blocos_minerados(blockchain);
 
   char opcao;
   while (1) {
@@ -927,7 +1016,8 @@ int main() {
            "\n[d] => Hash com menos transacoes e o numero de transacoes\n[e] "
            "=> Quantidade media de bitcoins por bloco\n[f] => Imprimir todos "
            "os campos de um dado bloco\n[g] => Imprimir os n blocos "
-           "minerados a partir de um endereco\n"
+           "minerados a partir de um endereco\n[i] => Imprimir todos os "
+           "blocos de um dado nonce\n"
            "============================================================"
            "==\n--> ");
 
@@ -946,11 +1036,11 @@ int main() {
       imprimir_bloco_arquivo_binario("blocos.bin");
     else if (opcao == 'g')
       imprimir_blocos_endereco("blocos.bin", "indices.bin");
+    else if (opcao == 'i')
+      imprimir_blocos_nonce("blocos.bin", "indices_nonce.bin");
     else
       break;
   }
-
-  // imprimir_arquivo_indice("indices.bin");
 
   free_blockchain(&blockchain);
 
