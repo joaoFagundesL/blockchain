@@ -247,13 +247,13 @@ void criar_arquivo_indice_nonce(const char *nome_arquivo,
     contador++;
 
     if (contador == MAX_NONCE_BUFFER) {
-      fwrite(registros, sizeof(struct indice_registro), contador, indice);
+      fwrite(registros, sizeof(struct indice_nonce), contador, indice);
       contador = 0;
     }
   }
 
   if (contador > 0)
-    fwrite(registros, sizeof(struct indice_registro), contador, indice);
+    fwrite(registros, sizeof(struct indice_nonce), contador, indice);
 
   fclose(arquivo);
   fclose(indice);
@@ -327,7 +327,7 @@ void imprimir_blocos_nonce(const char *nome_arquivo,
   /* Controle para imprimir os dados de acordo com o n fornecido pelo usuario*/
   int blocos_impressos = 0;
 
-  while (fread(&registro, sizeof(struct indice_registro), 1, indice) > 0) {
+  while (fread(&registro, sizeof(struct indice_nonce), 1, indice) > 0) {
 
     if (registro.nonce == nonce) {
 
