@@ -1,9 +1,3 @@
-Maior quantidade de blocos minerados = 12 nos enderecos:
-136 (Com 1000 blocos minerados)
-
-Maior quantidade de blocos minerados = 2 nos enderecos:
-33 39 52 61 72 93 149 162 210 211 233 245 254 (Com 100 blocos minerados)
-
-Maior quantidade de blocos minerados = 5 nos enderecos:
-149 158 (Com 300 blocos minerados)
+Maior quantidade de blocos minerados = 26 nos enderecos:
+54 (Com 4000 blocos minerados)
 

@@ -11,7 +11,7 @@
 #include <sys/types.h>
 #include <time.h>
 
-#define TOTAL_BLOCOS 300
+#define TOTAL_BLOCOS 4000
 #define MAX_TRANSACOES_BLOCO 61
 #define NUM_ENDERECOS 256
 #define DATA_LENGTH 184
@@ -194,7 +194,8 @@ void criar_arquivo_indice(const char *nome_arquivo,
 
     /* Usei um offset para ficar melhor depois a busca pois eu só me desloco no
      * arquivo baseado no offset */
-    registros[contador].offset = contador * sizeof(struct bloco_minerado);
+    // registros[contador].offset = contador * sizeof(struct bloco_minerado);
+    registros[contador].offset = ftell(arquivo) - sizeof(struct bloco_minerado);
 
     contador++;
 
@@ -242,7 +243,7 @@ void criar_arquivo_indice_nonce(const char *nome_arquivo,
   while (fread(&bloco, sizeof(struct bloco_minerado), 1, arquivo) > 0) {
     registros[contador].nonce = bloco.bloco.nonce;
 
-    registros[contador].offset = contador * sizeof(struct bloco_minerado);
+    registros[contador].offset = ftell(arquivo) - sizeof(struct bloco_minerado);
 
     contador++;
 
@@ -406,11 +407,13 @@ void imprimir_blocos_endereco(const char *nome_arquivo,
 
       /* Uso o offset e ja vou direto para o bloco desejado no meu arquivo */
       fseek(arquivo, registro.offset, SEEK_SET);
+      printf("offset = %lu", registro.offset);
 
       /* Leio o bloco que estava naquele offset */
       fread(&bloco, sizeof(struct bloco_minerado), 1, arquivo);
 
-      printf("endereco = %d\n", bloco.bloco.data[183]);
+      printf("numero = %d, end = %d\n", bloco.bloco.numero,
+             bloco.bloco.data[DATA_LENGTH - 1]);
 
       /* Imprimir todos os dados daquele bloco */
       exibir_dados_bloco(bloco, filename);
@@ -889,6 +892,10 @@ void gerar_transacoes_bloco(struct bloco_nao_minerado *bloco,
       inserir_enderecos_com_bitcoins(raiz, i);
     }
   }
+
+  if (bloco->data[183] == 136) {
+    printf("num = %d ", bloco->numero);
+  }
 }
 
 void inserir_bloco(struct bloco_minerado **blockchain,
@@ -1080,10 +1087,10 @@ int main() {
 
   /* Funcao de teste para saber se os dados foram inseridos corretamente, no
    * caso passaria a struct para a funcao de imprimir */
-  // struct bloco_minerado *test = le_arquivo("blocos.bin");
+  struct bloco_minerado *test = le_arquivo("blocos.bin");
 
   /* Escrece os blocos em um txt */
-  imprimir_blocos_minerados(blockchain);
+  // imprimir_blocos_minerados(test);
 
   char opcao;
   while (1) {
