@@ -1,0 +1,36 @@
+Bloco 200
+Nonce = 33
+Hash: 004023f0b224a7615af255bd809e73932c7705be6f55cf51241752522aa9a572
+Hash anterior: 009028992220238142232175d89abbe779e03967cf772199280e5b0e98d53115
+Endereco do minerador = 114
+Transação 1:
+endereco de origem: 93
+endereco de destino: 66
+quantidade transferida: 2
+
+Transação 2:
+endereco de origem: 231
+endereco de destino: 149
+quantidade transferida: 1
+
+Transação 3:
+endereco de origem: 154
+endereco de destino: 194
+quantidade transferida: 49
+
+Transação 4:
+endereco de origem: 251
+endereco de destino: 230
+quantidade transferida: 1
+
+Transação 5:
+endereco de origem: 89
+endereco de destino: 29
+quantidade transferida: 45
+
+Transação 6:
+endereco de origem: 3
+endereco de destino: 119
+quantidade transferida: 65
+
+

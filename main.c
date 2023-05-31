@@ -11,7 +11,7 @@
 #include <sys/types.h>
 #include <time.h>
 
-#define TOTAL_BLOCOS 50
+#define TOTAL_BLOCOS 200
 #define MAX_TRANSACOES_BLOCO 61
 #define NUM_ENDERECOS 256
 #define DATA_LENGTH 184
@@ -261,22 +261,29 @@ void criar_arquivo_indice_nonce(const char *nome_arquivo,
 
 /* Funcao para mostrar os dados de um código para evitar ficar repetindo toda
  * hora */
-void exibir_dados_bloco(struct bloco_minerado bloco) {
+void exibir_dados_bloco(struct bloco_minerado bloco, const char *filename) {
 
-  printf("Bloco %d\n", bloco.bloco.numero);
-  printf("Nonce = %u\n", bloco.bloco.nonce);
+  FILE *file = fopen(filename, "a");
+  if (file == NULL) {
+    fprintf(stderr, "Erro ao abrir o arquivo\n");
+    return;
+  }
 
-  printf("Hash: ");
+  fprintf(file, "Bloco %d\n", bloco.bloco.numero);
+  fprintf(file, "Nonce = %u\n", bloco.bloco.nonce);
+
+  fprintf(file, "Hash: ");
   for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
-    printf("%02x", bloco.hash[i]);
-  printf("\n");
+    fprintf(file, "%02x", bloco.hash[i]);
+  fprintf(file, "\n");
 
-  printf("Hash anterior: ");
+  fprintf(file, "Hash anterior: ");
   for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
-    printf("%02x", bloco.bloco.hash_anterior[i]);
-  printf("\n");
+    fprintf(file, "%02x", bloco.bloco.hash_anterior[i]);
+  fprintf(file, "\n");
 
-  printf("Endereco do minerador = %d\n", bloco.bloco.data[DATA_LENGTH - 1]);
+  fprintf(file, "Endereco do minerador = %d\n",
+          bloco.bloco.data[DATA_LENGTH - 1]);
 
   /* Só imprime transacao se nao for o genesis */
   if (bloco.bloco.numero != BLOCO_GENESIS) {
@@ -288,15 +295,14 @@ void exibir_dados_bloco(struct bloco_minerado bloco) {
       if (endereco_origem == 0 && endereco_destino == 0 && quantidade == 0)
         break;
 
-      printf("Transação %d:\n", i + 1);
+      fprintf(file, "Transação %d:\n", i + 1);
 
-      printf("endereco de origem: %u\n", endereco_origem);
-      printf("endereco de destino: %u\n", endereco_destino);
-      printf("quantidade transferida: %u\n\n", quantidade);
+      fprintf(file, "endereco de origem: %u\n", endereco_origem);
+      fprintf(file, "endereco de destino: %u\n", endereco_destino);
+      fprintf(file, "quantidade transferida: %u\n\n", quantidade);
     }
   }
-
-  printf("\n");
+  fprintf(file, "\n");
 }
 
 void imprimir_blocos_nonce(const char *nome_arquivo,
@@ -315,6 +321,8 @@ void imprimir_blocos_nonce(const char *nome_arquivo,
     fprintf(stderr, "Erro ao abrir o arquivo de índice!");
     return;
   }
+
+  const char *filename = "letraI.txt";
 
   /* Leitura de dados */
   uint32_t nonce;
@@ -338,7 +346,7 @@ void imprimir_blocos_nonce(const char *nome_arquivo,
       fread(&bloco, sizeof(struct bloco_minerado), 1, arquivo);
 
       /* Imprimir todos os dados daquele bloco */
-      exibir_dados_bloco(bloco);
+      exibir_dados_bloco(bloco, filename);
 
       blocos_impressos++;
     }
@@ -346,6 +354,8 @@ void imprimir_blocos_nonce(const char *nome_arquivo,
 
   if (blocos_impressos == 0) {
     fprintf(stderr, "Nenhum bloco com o nonce informado!\n\n");
+  } else {
+    printf("Resultado gravado no arquivo '%s'\n\n", filename);
   }
 
   fclose(arquivo);
@@ -378,13 +388,14 @@ void imprimir_blocos_endereco(const char *nome_arquivo,
   int n;
   printf("Informe a quantidade de blocos: ");
   scanf("%d", &n);
-  printf("\n");
 
   struct indice_registro registro;
   struct bloco_minerado bloco;
 
   /* Controle para imprimir os dados de acordo com o n fornecido pelo usuario*/
   int blocos_impressos = 0;
+
+  const char *filename = "letraG.txt";
 
   while (blocos_impressos < n &&
          fread(&registro, sizeof(struct indice_registro), 1, indice) > 0) {
@@ -398,7 +409,7 @@ void imprimir_blocos_endereco(const char *nome_arquivo,
       fread(&bloco, sizeof(struct bloco_minerado), 1, arquivo);
 
       /* Imprimir todos os dados daquele bloco */
-      exibir_dados_bloco(bloco);
+      exibir_dados_bloco(bloco, filename);
 
       if (blocos_impressos >= n)
         break;
@@ -409,6 +420,8 @@ void imprimir_blocos_endereco(const char *nome_arquivo,
 
   if (blocos_impressos == 0)
     fprintf(stderr, "Nenhum bloco encontrado!\n\n");
+  else
+    printf("Resultado gravado no arquivo '%s'\n\n", filename);
 
   fclose(arquivo);
   fclose(indice);
@@ -443,12 +456,13 @@ void imprimir_bloco_arquivo_binario(const char *nome_arquivo) {
   uint32_t numero_bloco;
   printf("Informe o numero do bloco que deseja procurar: ");
   scanf("%u", &numero_bloco);
-  printf("\n");
 
   if (numero_bloco > TOTAL_BLOCOS || numero_bloco <= 0) {
     fprintf(stderr, "Bloco nao encontrado\n\n");
     return;
   }
+
+  const char *filename = "letraF.txt";
 
   /* Isso garante que eu imprima o numero do bloco de forma correta, pois estava
    * imprimindo sempre um bloco a frente daquele desejado */
@@ -465,8 +479,8 @@ void imprimir_bloco_arquivo_binario(const char *nome_arquivo) {
   struct bloco_minerado bloco;
   fread(&bloco, sizeof(struct bloco_minerado), 1, arquivo);
 
-  exibir_dados_bloco(bloco);
-  printf("\n");
+  exibir_dados_bloco(bloco, filename);
+  printf("Resultado gravado no arquivo '%s'\n\n", filename);
 
   fclose(arquivo);
 }
@@ -507,13 +521,21 @@ int conta_enderecos(struct enderecos_bitcoin *raiz) {
  * atualizados, basta eu saber de quem é o hash */
 void verificar_hash_com_menos_transacao(struct bloco_minerado *blockchain,
                                         struct estatisticas *est) {
+
+  const char *filename = "letraD.txt";
+
+  FILE *file = fopen(filename, "a");
+  if (file == NULL) {
+    fprintf(stderr, "Erro ao abrir o arquivo\n");
+    return;
+  }
+
   if (blockchain == NULL)
     fprintf(stderr, "lista vazia\n");
 
   struct bloco_minerado *tmp = blockchain;
-
-  printf("Menor numeros de transacoes = %lu nos hashs:\n",
-         est->menor_transacao);
+  fprintf(file, "Menor numero de transacoes = %lu nos hashs:\n",
+          est->menor_transacao);
 
   while (tmp != NULL) {
     if (tmp->bloco.numero == BLOCO_GENESIS)
@@ -539,27 +561,35 @@ void verificar_hash_com_menos_transacao(struct bloco_minerado *blockchain,
     /* Printo o hash caso encontre */
     if (count == est->menor_transacao || tmp->bloco.numero == BLOCO_GENESIS) {
       for (size_t i = 0; i < SHA256_DIGEST_LENGTH; i++)
-        printf("%02x", tmp->hash[i]);
-      printf("\n");
+        fprintf(file, "%02x", tmp->hash[i]);
+      fprintf(file, "\n");
     }
 
     /* Avanca ate ser nulo */
     tmp = tmp->prox;
   }
-  printf("\n");
+  fprintf(file, "(Com %d blocos minerados)\n\n", TOTAL_BLOCOS);
+  printf("Resultado gravado no arquivo '%s'\n\n", filename);
 }
 
 /* Mesma logica da funcao anterior */
 void verificar_hash_com_mais_transacao(struct bloco_minerado *blockchain,
                                        struct estatisticas *est) {
 
+  const char *filename = "letraC.txt";
+  FILE *file = fopen(filename, "a");
+  if (file == NULL) {
+    fprintf(stderr, "Erro ao abrir o arquivo\n");
+    return;
+  }
+
   if (blockchain == NULL)
     fprintf(stderr, "lista vazia\n");
 
   struct bloco_minerado *tmp = blockchain;
 
-  printf("Maior numeros de transacoes = %lu nos hashs:\n",
-         est->maior_transacao);
+  fprintf(file, "Maior numeros de transacoes = %lu nos hashs:\n",
+          est->maior_transacao);
 
   while (tmp != NULL) {
     int count = 0;
@@ -577,29 +607,38 @@ void verificar_hash_com_mais_transacao(struct bloco_minerado *blockchain,
 
     if (count == est->maior_transacao) {
       for (size_t i = 0; i < SHA256_DIGEST_LENGTH; i++)
-        printf("%02x", tmp->hash[i]);
-      printf("\n");
+        fprintf(file, "%02x", tmp->hash[i]);
+      fprintf(file, "\n");
     }
     tmp = tmp->prox;
   }
-  printf("\n");
+  fprintf(file, "(Com %d blocos minerados)\n\n", TOTAL_BLOCOS);
+  printf("Resultado escrito no arquivo '%s'\n\n", filename);
+  fclose(file);
 }
 
 void encontrar_maior_numero_bitcoins(uint32_t carteira[]) {
-  /* Variavel de controle pois preciso imprimir todos os enderecos em caso de
+  const char *filename = "letraA.txt";
+  FILE *file = fopen(filename, "a");
+  if (file == NULL) {
+    fprintf(stderr, "Erro ao abrir o arquivo de saída!");
+    return;
+  }
+
+  /* Variável de controle pois preciso imprimir todos os enderecos em caso de
    * empate */
   int num_enderecos_max_bitcoins = 0;
 
-  /* Inicia com 0 para garantir que sempre vai ter alguem maior que 0 */
+  /* Inicia com 0 para garantir que sempre vai ter alguém maior que 0 */
   uint32_t max_bitcoins = 0;
 
-  /* Acho o maior numero de bitcoins */
+  /* Acha o maior número de bitcoins */
   for (size_t i = 0; i < NUM_ENDERECOS; i++) {
     if (carteira[i] > max_bitcoins)
       max_bitcoins = carteira[i];
   }
 
-  /* Como eu nao sei quantos enderecos possuem eu faco um vetor dinamico */
+  /* Como eu não sei quantos enderecos possuem, faço um vetor dinâmico */
   uint8_t *enderecos_max_bitcoins = malloc(sizeof(uint8_t));
   assert(enderecos_max_bitcoins != NULL);
 
@@ -608,7 +647,7 @@ void encontrar_maior_numero_bitcoins(uint32_t carteira[]) {
       enderecos_max_bitcoins[num_enderecos_max_bitcoins] = i;
       num_enderecos_max_bitcoins++;
 
-      /* Sempre que tiver um endereco eu aumento meu vetor */
+      /* Sempre que tiver um endereco, eu aumento meu vetor */
       enderecos_max_bitcoins =
           realloc(enderecos_max_bitcoins,
                   sizeof(uint8_t) * (num_enderecos_max_bitcoins + 1));
@@ -617,18 +656,21 @@ void encontrar_maior_numero_bitcoins(uint32_t carteira[]) {
     }
   }
 
-  printf("Maior numero de bitcoins = %u nos seguintes enderecos ",
-         max_bitcoins);
+  fprintf(file, "Maior numero de bitcoins = %u nos seguintes enderecos ",
+          max_bitcoins);
 
   for (size_t i = 0; i < num_enderecos_max_bitcoins; i++)
-    printf("%u ", enderecos_max_bitcoins[i]);
-  printf("\n\n");
+    fprintf(file, "%u ", enderecos_max_bitcoins[i]);
+  fprintf(file, "(Com %d blocos minerados)\n", TOTAL_BLOCOS);
+
+  printf("Resultado escrito no arquivo '%s'\n\n", filename);
 
   /* Libero vetor dinamico */
   free(enderecos_max_bitcoins);
   enderecos_max_bitcoins = NULL;
-}
 
+  fclose(file);
+}
 int escolhe_carteira(struct enderecos_bitcoin *raiz, uint32_t indice) {
   size_t i = 0;
   if (!raiz)
@@ -671,6 +713,12 @@ void atualizar_maior_menor_transacao(struct estatisticas *est,
 }
 
 void endereco_com_mais_blocos_minerados(struct estatisticas est) {
+  const char *filename = "letraB.txt";
+
+  FILE *file = fopen(filename, "a");
+  if (file == NULL) {
+    fprintf(stderr, "Erro ao abrir o arquivo\n");
+  }
   int maior = 0;
 
   /* Encontra o maior dentro do array */
@@ -683,12 +731,15 @@ void endereco_com_mais_blocos_minerados(struct estatisticas est) {
    * Cada posicao do array é um minerador e cada valor é a quantidade de blocos
    * minerados
    * */
-  printf("Maior quantidade de blocos minerados = %d nos enderecos:\n", maior);
+  fprintf(file, "Maior quantidade de blocos minerados = %d nos enderecos:\n",
+          maior);
   for (int i = 0; i < NUM_ENDERECOS; i++) {
     if (est.array_quantidade_de_blocos_minerados[i] == maior)
-      printf("%d ", i);
+      fprintf(file, "%d ", i);
   }
-  printf("\n\n");
+  fprintf(file, "(Com %d blocos minerados)\n\n", TOTAL_BLOCOS);
+  printf("Resultado escrito no arquivo '%s'\n\n", filename);
+  fclose(file);
 }
 
 /* Funcao que remove elemento da lista */
@@ -873,6 +924,7 @@ void imprimir_blocos_minerados(struct bloco_minerado *blockchain) {
 
   while (atual != NULL) {
     fprintf(file, "Bloco %u:\n", atual->bloco.numero);
+    fprintf(file, "Nonce: %u\n", atual->bloco.nonce);
     fprintf(file, "Hash do bloco: ");
     for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
       fprintf(file, "%02x", atual->hash[i]);
