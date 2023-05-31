@@ -1,0 +1,2973 @@
+Bloco 133
+Nonce = 230
+Hash: 001812ea8cde6ae05b74b617ce6bbc2b55524730046d0b98606bdcc0ba144d15
+Hash anterior: 007e76e103f9075415bde340297a425676a51ac3b396f5fba7b6b24360c7579e
+Endereco do minerador = 102
+Transação 1:
+endereco de origem: 57
+endereco de destino: 205
+quantidade transferida: 92
+
+Transação 2:
+endereco de origem: 180
+endereco de destino: 116
+quantidade transferida: 2
+
+Transação 3:
+endereco de origem: 237
+endereco de destino: 3
+quantidade transferida: 0
+
+Transação 4:
+endereco de origem: 39
+endereco de destino: 38
+quantidade transferida: 14
+
+Transação 5:
+endereco de origem: 234
+endereco de destino: 253
+quantidade transferida: 47
+
+Transação 6:
+endereco de origem: 227
+endereco de destino: 171
+quantidade transferida: 1
+
+Transação 7:
+endereco de origem: 146
+endereco de destino: 46
+quantidade transferida: 16
+
+Transação 8:
+endereco de origem: 136
+endereco de destino: 55
+quantidade transferida: 2
+
+Transação 9:
+endereco de origem: 173
+endereco de destino: 93
+quantidade transferida: 0
+
+Transação 10:
+endereco de origem: 234
+endereco de destino: 221
+quantidade transferida: 7
+
+Transação 11:
+endereco de origem: 88
+endereco de destino: 149
+quantidade transferida: 0
+
+Transação 12:
+endereco de origem: 36
+endereco de destino: 84
+quantidade transferida: 29
+
+Transação 13:
+endereco de origem: 215
+endereco de destino: 227
+quantidade transferida: 4
+
+Transação 14:
+endereco de origem: 34
+endereco de destino: 142
+quantidade transferida: 4
+
+Transação 15:
+endereco de origem: 246
+endereco de destino: 160
+quantidade transferida: 7
+
+Transação 16:
+endereco de origem: 235
+endereco de destino: 246
+quantidade transferida: 21
+
+Transação 17:
+endereco de origem: 113
+endereco de destino: 125
+quantidade transferida: 3
+
+Transação 18:
+endereco de origem: 178
+endereco de destino: 103
+quantidade transferida: 3
+
+Transação 19:
+endereco de origem: 34
+endereco de destino: 125
+quantidade transferida: 0
+
+Transação 20:
+endereco de origem: 227
+endereco de destino: 44
+quantidade transferida: 0
+
+Transação 21:
+endereco de origem: 78
+endereco de destino: 26
+quantidade transferida: 8
+
+Transação 22:
+endereco de origem: 224
+endereco de destino: 47
+quantidade transferida: 4
+
+Transação 23:
+endereco de origem: 206
+endereco de destino: 191
+quantidade transferida: 1
+
+Transação 24:
+endereco de origem: 126
+endereco de destino: 6
+quantidade transferida: 14
+
+Transação 25:
+endereco de origem: 26
+endereco de destino: 14
+quantidade transferida: 5
+
+Transação 26:
+endereco de origem: 78
+endereco de destino: 133
+quantidade transferida: 7
+
+Transação 27:
+endereco de origem: 172
+endereco de destino: 59
+quantidade transferida: 4
+
+Transação 28:
+endereco de origem: 227
+endereco de destino: 171
+quantidade transferida: 1
+
+Transação 29:
+endereco de origem: 5
+endereco de destino: 201
+quantidade transferida: 48
+
+Transação 30:
+endereco de origem: 162
+endereco de destino: 214
+quantidade transferida: 79
+
+Transação 31:
+endereco de origem: 67
+endereco de destino: 151
+quantidade transferida: 18
+
+Transação 32:
+endereco de origem: 152
+endereco de destino: 32
+quantidade transferida: 44
+
+Transação 33:
+endereco de origem: 11
+endereco de destino: 103
+quantidade transferida: 6
+
+Transação 34:
+endereco de origem: 8
+endereco de destino: 146
+quantidade transferida: 31
+
+Transação 35:
+endereco de origem: 7
+endereco de destino: 30
+quantidade transferida: 6
+
+Transação 36:
+endereco de origem: 233
+endereco de destino: 24
+quantidade transferida: 9
+
+Transação 37:
+endereco de origem: 77
+endereco de destino: 115
+quantidade transferida: 33
+
+Transação 38:
+endereco de origem: 128
+endereco de destino: 21
+quantidade transferida: 5
+
+Transação 39:
+endereco de origem: 59
+endereco de destino: 129
+quantidade transferida: 26
+
+
+Bloco 63
+Nonce = 28
+Hash: 0072b9cc765eac474be4f461202000f7c511ad92709783a0409b8e31c69393ef
+Hash anterior: 00b5c63702991fcdada287a23e3645f4c1593f08fe2c8453518c063e42249c1f
+Endereco do minerador = 213
+Transação 1:
+endereco de origem: 53
+endereco de destino: 249
+quantidade transferida: 4
+
+Transação 2:
+endereco de origem: 162
+endereco de destino: 153
+quantidade transferida: 2
+
+Transação 3:
+endereco de origem: 219
+endereco de destino: 196
+quantidade transferida: 4
+
+Transação 4:
+endereco de origem: 244
+endereco de destino: 50
+quantidade transferida: 40
+
+Transação 5:
+endereco de origem: 130
+endereco de destino: 179
+quantidade transferida: 1
+
+Transação 6:
+endereco de origem: 132
+endereco de destino: 134
+quantidade transferida: 0
+
+Transação 7:
+endereco de origem: 1
+endereco de destino: 87
+quantidade transferida: 1
+
+Transação 8:
+endereco de origem: 39
+endereco de destino: 6
+quantidade transferida: 1
+
+Transação 9:
+endereco de origem: 53
+endereco de destino: 172
+quantidade transferida: 1
+
+Transação 10:
+endereco de origem: 24
+endereco de destino: 84
+quantidade transferida: 11
+
+Transação 11:
+endereco de origem: 126
+endereco de destino: 182
+quantidade transferida: 17
+
+Transação 12:
+endereco de origem: 74
+endereco de destino: 156
+quantidade transferida: 1
+
+Transação 13:
+endereco de origem: 229
+endereco de destino: 133
+quantidade transferida: 8
+
+Transação 14:
+endereco de origem: 254
+endereco de destino: 201
+quantidade transferida: 1
+
+Transação 15:
+endereco de origem: 95
+endereco de destino: 172
+quantidade transferida: 1
+
+Transação 16:
+endereco de origem: 30
+endereco de destino: 9
+quantidade transferida: 3
+
+Transação 17:
+endereco de origem: 135
+endereco de destino: 36
+quantidade transferida: 2
+
+Transação 18:
+endereco de origem: 162
+endereco de destino: 79
+quantidade transferida: 4
+
+Transação 19:
+endereco de origem: 33
+endereco de destino: 36
+quantidade transferida: 4
+
+Transação 20:
+endereco de origem: 89
+endereco de destino: 230
+quantidade transferida: 1
+
+Transação 21:
+endereco de origem: 200
+endereco de destino: 169
+quantidade transferida: 9
+
+Transação 22:
+endereco de origem: 85
+endereco de destino: 170
+quantidade transferida: 27
+
+
+Bloco 82
+Nonce = 411
+Hash: 00c5fd3aeda9342646a7aa5f285fbb84db788ad57c3b90b7d7dc0dca164fd066
+Hash anterior: 00db7f70b3e511dc60d0b8dad3f2e55be380d701534271150fd315d79fff613c
+Endereco do minerador = 233
+Transação 1:
+endereco de origem: 255
+endereco de destino: 86
+quantidade transferida: 50
+
+Transação 2:
+endereco de origem: 183
+endereco de destino: 159
+quantidade transferida: 0
+
+Transação 3:
+endereco de origem: 181
+endereco de destino: 227
+quantidade transferida: 5
+
+Transação 4:
+endereco de origem: 189
+endereco de destino: 38
+quantidade transferida: 1
+
+Transação 5:
+endereco de origem: 255
+endereco de destino: 130
+quantidade transferida: 8
+
+Transação 6:
+endereco de origem: 3
+endereco de destino: 222
+quantidade transferida: 6
+
+Transação 7:
+endereco de origem: 188
+endereco de destino: 9
+quantidade transferida: 7
+
+Transação 8:
+endereco de origem: 244
+endereco de destino: 196
+quantidade transferida: 0
+
+Transação 9:
+endereco de origem: 205
+endereco de destino: 190
+quantidade transferida: 33
+
+Transação 10:
+endereco de origem: 149
+endereco de destino: 31
+quantidade transferida: 3
+
+Transação 11:
+endereco de origem: 175
+endereco de destino: 237
+quantidade transferida: 4
+
+Transação 12:
+endereco de origem: 18
+endereco de destino: 72
+quantidade transferida: 0
+
+Transação 13:
+endereco de origem: 254
+endereco de destino: 52
+quantidade transferida: 1
+
+Transação 14:
+endereco de origem: 242
+endereco de destino: 239
+quantidade transferida: 4
+
+Transação 15:
+endereco de origem: 247
+endereco de destino: 26
+quantidade transferida: 8
+
+Transação 16:
+endereco de origem: 102
+endereco de destino: 84
+quantidade transferida: 22
+
+Transação 17:
+endereco de origem: 219
+endereco de destino: 190
+quantidade transferida: 0
+
+Transação 18:
+endereco de origem: 37
+endereco de destino: 187
+quantidade transferida: 5
+
+Transação 19:
+endereco de origem: 138
+endereco de destino: 38
+quantidade transferida: 16
+
+Transação 20:
+endereco de origem: 188
+endereco de destino: 180
+quantidade transferida: 6
+
+Transação 21:
+endereco de origem: 45
+endereco de destino: 41
+quantidade transferida: 0
+
+Transação 22:
+endereco de origem: 53
+endereco de destino: 119
+quantidade transferida: 2
+
+Transação 23:
+endereco de origem: 161
+endereco de destino: 156
+quantidade transferida: 28
+
+Transação 24:
+endereco de origem: 189
+endereco de destino: 123
+quantidade transferida: 2
+
+Transação 25:
+endereco de origem: 226
+endereco de destino: 94
+quantidade transferida: 35
+
+Transação 26:
+endereco de origem: 238
+endereco de destino: 5
+quantidade transferida: 3
+
+Transação 27:
+endereco de origem: 47
+endereco de destino: 244
+quantidade transferida: 2
+
+Transação 28:
+endereco de origem: 139
+endereco de destino: 96
+quantidade transferida: 1
+
+Transação 29:
+endereco de origem: 55
+endereco de destino: 122
+quantidade transferida: 56
+
+Transação 30:
+endereco de origem: 103
+endereco de destino: 23
+quantidade transferida: 11
+
+Transação 31:
+endereco de origem: 68
+endereco de destino: 227
+quantidade transferida: 2
+
+Transação 32:
+endereco de origem: 226
+endereco de destino: 5
+quantidade transferida: 0
+
+Transação 33:
+endereco de origem: 118
+endereco de destino: 19
+quantidade transferida: 0
+
+Transação 34:
+endereco de origem: 183
+endereco de destino: 132
+quantidade transferida: 1
+
+Transação 35:
+endereco de origem: 35
+endereco de destino: 78
+quantidade transferida: 0
+
+Transação 36:
+endereco de origem: 140
+endereco de destino: 65
+quantidade transferida: 0
+
+Transação 37:
+endereco de origem: 99
+endereco de destino: 127
+quantidade transferida: 1
+
+Transação 38:
+endereco de origem: 33
+endereco de destino: 252
+quantidade transferida: 1
+
+Transação 39:
+endereco de origem: 84
+endereco de destino: 198
+quantidade transferida: 13
+
+Transação 40:
+endereco de origem: 83
+endereco de destino: 44
+quantidade transferida: 39
+
+Transação 41:
+endereco de origem: 254
+endereco de destino: 235
+quantidade transferida: 0
+
+Transação 42:
+endereco de origem: 61
+endereco de destino: 185
+quantidade transferida: 0
+
+Transação 43:
+endereco de origem: 211
+endereco de destino: 11
+quantidade transferida: 13
+
+Transação 44:
+endereco de origem: 160
+endereco de destino: 214
+quantidade transferida: 2
+
+Transação 45:
+endereco de origem: 12
+endereco de destino: 225
+quantidade transferida: 1
+
+
+Bloco 96
+Nonce = 158
+Hash: 00a035d7d6a193a021a41a95a3a0e2144bca1a2c21a053353b073dfb34bd7216
+Hash anterior: 00758c59ad3eee2ec3e62d2dcd2bd81a9028d863c3ceddedcf81a0e4d8d430f3
+Endereco do minerador = 57
+Transação 1:
+endereco de origem: 206
+endereco de destino: 29
+quantidade transferida: 4
+
+Transação 2:
+endereco de origem: 225
+endereco de destino: 61
+quantidade transferida: 7
+
+Transação 3:
+endereco de origem: 246
+endereco de destino: 38
+quantidade transferida: 3
+
+Transação 4:
+endereco de origem: 246
+endereco de destino: 19
+quantidade transferida: 2
+
+Transação 5:
+endereco de origem: 151
+endereco de destino: 0
+quantidade transferida: 34
+
+Transação 6:
+endereco de origem: 239
+endereco de destino: 215
+quantidade transferida: 3
+
+Transação 7:
+endereco de origem: 44
+endereco de destino: 253
+quantidade transferida: 6
+
+Transação 8:
+endereco de origem: 39
+endereco de destino: 86
+quantidade transferida: 4
+
+Transação 9:
+endereco de origem: 116
+endereco de destino: 238
+quantidade transferida: 12
+
+Transação 10:
+endereco de origem: 138
+endereco de destino: 255
+quantidade transferida: 75
+
+Transação 11:
+endereco de origem: 157
+endereco de destino: 176
+quantidade transferida: 3
+
+Transação 12:
+endereco de origem: 42
+endereco de destino: 71
+quantidade transferida: 34
+
+Transação 13:
+endereco de origem: 175
+endereco de destino: 168
+quantidade transferida: 41
+
+Transação 14:
+endereco de origem: 9
+endereco de destino: 172
+quantidade transferida: 4
+
+Transação 15:
+endereco de origem: 201
+endereco de destino: 254
+quantidade transferida: 1
+
+Transação 16:
+endereco de origem: 79
+endereco de destino: 101
+quantidade transferida: 0
+
+Transação 17:
+endereco de origem: 161
+endereco de destino: 149
+quantidade transferida: 0
+
+Transação 18:
+endereco de origem: 44
+endereco de destino: 235
+quantidade transferida: 4
+
+Transação 19:
+endereco de origem: 92
+endereco de destino: 2
+quantidade transferida: 1
+
+Transação 20:
+endereco de origem: 124
+endereco de destino: 166
+quantidade transferida: 31
+
+
+Bloco 52
+Nonce = 78
+Hash: 00285394bd5bb04e6c334d258bb39ff6a455595f01c45217719e60709554d95c
+Hash anterior: 0035ed692ab534fe49e199dd8ec87b0d670958541eba31f99d084d564f956083
+Endereco do minerador = 72
+Transação 1:
+endereco de origem: 41
+endereco de destino: 247
+quantidade transferida: 1
+
+Transação 2:
+endereco de origem: 40
+endereco de destino: 98
+quantidade transferida: 1
+
+Transação 3:
+endereco de origem: 88
+endereco de destino: 230
+quantidade transferida: 4
+
+Transação 4:
+endereco de origem: 230
+endereco de destino: 224
+quantidade transferida: 0
+
+Transação 5:
+endereco de origem: 25
+endereco de destino: 175
+quantidade transferida: 9
+
+Transação 6:
+endereco de origem: 144
+endereco de destino: 204
+quantidade transferida: 3
+
+Transação 7:
+endereco de origem: 71
+endereco de destino: 13
+quantidade transferida: 24
+
+Transação 8:
+endereco de origem: 121
+endereco de destino: 203
+quantidade transferida: 26
+
+Transação 9:
+endereco de origem: 60
+endereco de destino: 254
+quantidade transferida: 1
+
+Transação 10:
+endereco de origem: 253
+endereco de destino: 208
+quantidade transferida: 32
+
+Transação 11:
+endereco de origem: 27
+endereco de destino: 64
+quantidade transferida: 0
+
+Transação 12:
+endereco de origem: 179
+endereco de destino: 171
+quantidade transferida: 1
+
+Transação 13:
+endereco de origem: 36
+endereco de destino: 25
+quantidade transferida: 4
+
+Transação 14:
+endereco de origem: 149
+endereco de destino: 114
+quantidade transferida: 6
+
+Transação 15:
+endereco de origem: 253
+endereco de destino: 189
+quantidade transferida: 9
+
+Transação 16:
+endereco de origem: 150
+endereco de destino: 29
+quantidade transferida: 0
+
+Transação 17:
+endereco de origem: 111
+endereco de destino: 246
+quantidade transferida: 19
+
+Transação 18:
+endereco de origem: 39
+endereco de destino: 231
+quantidade transferida: 24
+
+Transação 19:
+endereco de origem: 6
+endereco de destino: 43
+quantidade transferida: 1
+
+Transação 20:
+endereco de origem: 157
+endereco de destino: 237
+quantidade transferida: 8
+
+Transação 21:
+endereco de origem: 95
+endereco de destino: 7
+quantidade transferida: 14
+
+Transação 22:
+endereco de origem: 95
+endereco de destino: 198
+quantidade transferida: 7
+
+Transação 23:
+endereco de origem: 88
+endereco de destino: 141
+quantidade transferida: 3
+
+Transação 24:
+endereco de origem: 73
+endereco de destino: 156
+quantidade transferida: 1
+
+Transação 25:
+endereco de origem: 242
+endereco de destino: 22
+quantidade transferida: 13
+
+Transação 26:
+endereco de origem: 52
+endereco de destino: 111
+quantidade transferida: 24
+
+Transação 27:
+endereco de origem: 190
+endereco de destino: 215
+quantidade transferida: 4
+
+Transação 28:
+endereco de origem: 103
+endereco de destino: 194
+quantidade transferida: 17
+
+Transação 29:
+endereco de origem: 88
+endereco de destino: 109
+quantidade transferida: 0
+
+Transação 30:
+endereco de origem: 14
+endereco de destino: 164
+quantidade transferida: 1
+
+Transação 31:
+endereco de origem: 47
+endereco de destino: 24
+quantidade transferida: 1
+
+Transação 32:
+endereco de origem: 195
+endereco de destino: 130
+quantidade transferida: 1
+
+Transação 33:
+endereco de origem: 185
+endereco de destino: 55
+quantidade transferida: 43
+
+Transação 34:
+endereco de origem: 156
+endereco de destino: 154
+quantidade transferida: 4
+
+Transação 35:
+endereco de origem: 131
+endereco de destino: 142
+quantidade transferida: 0
+
+Transação 36:
+endereco de origem: 254
+endereco de destino: 69
+quantidade transferida: 0
+
+Transação 37:
+endereco de origem: 239
+endereco de destino: 242
+quantidade transferida: 5
+
+Transação 38:
+endereco de origem: 63
+endereco de destino: 149
+quantidade transferida: 2
+
+Transação 39:
+endereco de origem: 53
+endereco de destino: 202
+quantidade transferida: 12
+
+Transação 40:
+endereco de origem: 35
+endereco de destino: 247
+quantidade transferida: 6
+
+Transação 41:
+endereco de origem: 145
+endereco de destino: 227
+quantidade transferida: 4
+
+Transação 42:
+endereco de origem: 216
+endereco de destino: 255
+quantidade transferida: 1
+
+Transação 43:
+endereco de origem: 79
+endereco de destino: 98
+quantidade transferida: 7
+
+Transação 44:
+endereco de origem: 134
+endereco de destino: 184
+quantidade transferida: 2
+
+
+Bloco 141
+Nonce = 28
+Hash: 007e34738d6e3109036e38c9b81007342f5b94791fccc7d116cc891db20a756e
+Hash anterior: 003e610feab5e0339bc9d3fb771948ef18d33f9c4e9641b85a2b0e51cd599aeb
+Endereco do minerador = 50
+Transação 1:
+endereco de origem: 185
+endereco de destino: 73
+quantidade transferida: 16
+
+Transação 2:
+endereco de origem: 21
+endereco de destino: 72
+quantidade transferida: 14
+
+Transação 3:
+endereco de origem: 73
+endereco de destino: 29
+quantidade transferida: 2
+
+Transação 4:
+endereco de origem: 147
+endereco de destino: 22
+quantidade transferida: 14
+
+Transação 5:
+endereco de origem: 248
+endereco de destino: 102
+quantidade transferida: 6
+
+Transação 6:
+endereco de origem: 143
+endereco de destino: 230
+quantidade transferida: 0
+
+Transação 7:
+endereco de origem: 123
+endereco de destino: 225
+quantidade transferida: 12
+
+Transação 8:
+endereco de origem: 203
+endereco de destino: 38
+quantidade transferida: 11
+
+Transação 9:
+endereco de origem: 16
+endereco de destino: 132
+quantidade transferida: 4
+
+Transação 10:
+endereco de origem: 7
+endereco de destino: 238
+quantidade transferida: 1
+
+Transação 11:
+endereco de origem: 3
+endereco de destino: 106
+quantidade transferida: 13
+
+Transação 12:
+endereco de origem: 196
+endereco de destino: 42
+quantidade transferida: 14
+
+Transação 13:
+endereco de origem: 189
+endereco de destino: 84
+quantidade transferida: 14
+
+Transação 14:
+endereco de origem: 86
+endereco de destino: 253
+quantidade transferida: 41
+
+Transação 15:
+endereco de origem: 226
+endereco de destino: 164
+quantidade transferida: 0
+
+Transação 16:
+endereco de origem: 199
+endereco de destino: 249
+quantidade transferida: 1
+
+Transação 17:
+endereco de origem: 94
+endereco de destino: 7
+quantidade transferida: 22
+
+Transação 18:
+endereco de origem: 242
+endereco de destino: 158
+quantidade transferida: 6
+
+Transação 19:
+endereco de origem: 206
+endereco de destino: 232
+quantidade transferida: 4
+
+Transação 20:
+endereco de origem: 97
+endereco de destino: 247
+quantidade transferida: 3
+
+Transação 21:
+endereco de origem: 189
+endereco de destino: 244
+quantidade transferida: 5
+
+
+Bloco 133
+Nonce = 230
+Hash: 001812ea8cde6ae05b74b617ce6bbc2b55524730046d0b98606bdcc0ba144d15
+Hash anterior: 007e76e103f9075415bde340297a425676a51ac3b396f5fba7b6b24360c7579e
+Endereco do minerador = 102
+Transação 1:
+endereco de origem: 57
+endereco de destino: 205
+quantidade transferida: 92
+
+Transação 2:
+endereco de origem: 180
+endereco de destino: 116
+quantidade transferida: 2
+
+Transação 3:
+endereco de origem: 237
+endereco de destino: 3
+quantidade transferida: 0
+
+Transação 4:
+endereco de origem: 39
+endereco de destino: 38
+quantidade transferida: 14
+
+Transação 5:
+endereco de origem: 234
+endereco de destino: 253
+quantidade transferida: 47
+
+Transação 6:
+endereco de origem: 227
+endereco de destino: 171
+quantidade transferida: 1
+
+Transação 7:
+endereco de origem: 146
+endereco de destino: 46
+quantidade transferida: 16
+
+Transação 8:
+endereco de origem: 136
+endereco de destino: 55
+quantidade transferida: 2
+
+Transação 9:
+endereco de origem: 173
+endereco de destino: 93
+quantidade transferida: 0
+
+Transação 10:
+endereco de origem: 234
+endereco de destino: 221
+quantidade transferida: 7
+
+Transação 11:
+endereco de origem: 88
+endereco de destino: 149
+quantidade transferida: 0
+
+Transação 12:
+endereco de origem: 36
+endereco de destino: 84
+quantidade transferida: 29
+
+Transação 13:
+endereco de origem: 215
+endereco de destino: 227
+quantidade transferida: 4
+
+Transação 14:
+endereco de origem: 34
+endereco de destino: 142
+quantidade transferida: 4
+
+Transação 15:
+endereco de origem: 246
+endereco de destino: 160
+quantidade transferida: 7
+
+Transação 16:
+endereco de origem: 235
+endereco de destino: 246
+quantidade transferida: 21
+
+Transação 17:
+endereco de origem: 113
+endereco de destino: 125
+quantidade transferida: 3
+
+Transação 18:
+endereco de origem: 178
+endereco de destino: 103
+quantidade transferida: 3
+
+Transação 19:
+endereco de origem: 34
+endereco de destino: 125
+quantidade transferida: 0
+
+Transação 20:
+endereco de origem: 227
+endereco de destino: 44
+quantidade transferida: 0
+
+Transação 21:
+endereco de origem: 78
+endereco de destino: 26
+quantidade transferida: 8
+
+Transação 22:
+endereco de origem: 224
+endereco de destino: 47
+quantidade transferida: 4
+
+Transação 23:
+endereco de origem: 206
+endereco de destino: 191
+quantidade transferida: 1
+
+Transação 24:
+endereco de origem: 126
+endereco de destino: 6
+quantidade transferida: 14
+
+Transação 25:
+endereco de origem: 26
+endereco de destino: 14
+quantidade transferida: 5
+
+Transação 26:
+endereco de origem: 78
+endereco de destino: 133
+quantidade transferida: 7
+
+Transação 27:
+endereco de origem: 172
+endereco de destino: 59
+quantidade transferida: 4
+
+Transação 28:
+endereco de origem: 227
+endereco de destino: 171
+quantidade transferida: 1
+
+Transação 29:
+endereco de origem: 5
+endereco de destino: 201
+quantidade transferida: 48
+
+Transação 30:
+endereco de origem: 162
+endereco de destino: 214
+quantidade transferida: 79
+
+Transação 31:
+endereco de origem: 67
+endereco de destino: 151
+quantidade transferida: 18
+
+Transação 32:
+endereco de origem: 152
+endereco de destino: 32
+quantidade transferida: 44
+
+Transação 33:
+endereco de origem: 11
+endereco de destino: 103
+quantidade transferida: 6
+
+Transação 34:
+endereco de origem: 8
+endereco de destino: 146
+quantidade transferida: 31
+
+Transação 35:
+endereco de origem: 7
+endereco de destino: 30
+quantidade transferida: 6
+
+Transação 36:
+endereco de origem: 233
+endereco de destino: 24
+quantidade transferida: 9
+
+Transação 37:
+endereco de origem: 77
+endereco de destino: 115
+quantidade transferida: 33
+
+Transação 38:
+endereco de origem: 128
+endereco de destino: 21
+quantidade transferida: 5
+
+Transação 39:
+endereco de origem: 59
+endereco de destino: 129
+quantidade transferida: 26
+
+
+Bloco 63
+Nonce = 28
+Hash: 0072b9cc765eac474be4f461202000f7c511ad92709783a0409b8e31c69393ef
+Hash anterior: 00b5c63702991fcdada287a23e3645f4c1593f08fe2c8453518c063e42249c1f
+Endereco do minerador = 213
+Transação 1:
+endereco de origem: 53
+endereco de destino: 249
+quantidade transferida: 4
+
+Transação 2:
+endereco de origem: 162
+endereco de destino: 153
+quantidade transferida: 2
+
+Transação 3:
+endereco de origem: 219
+endereco de destino: 196
+quantidade transferida: 4
+
+Transação 4:
+endereco de origem: 244
+endereco de destino: 50
+quantidade transferida: 40
+
+Transação 5:
+endereco de origem: 130
+endereco de destino: 179
+quantidade transferida: 1
+
+Transação 6:
+endereco de origem: 132
+endereco de destino: 134
+quantidade transferida: 0
+
+Transação 7:
+endereco de origem: 1
+endereco de destino: 87
+quantidade transferida: 1
+
+Transação 8:
+endereco de origem: 39
+endereco de destino: 6
+quantidade transferida: 1
+
+Transação 9:
+endereco de origem: 53
+endereco de destino: 172
+quantidade transferida: 1
+
+Transação 10:
+endereco de origem: 24
+endereco de destino: 84
+quantidade transferida: 11
+
+Transação 11:
+endereco de origem: 126
+endereco de destino: 182
+quantidade transferida: 17
+
+Transação 12:
+endereco de origem: 74
+endereco de destino: 156
+quantidade transferida: 1
+
+Transação 13:
+endereco de origem: 229
+endereco de destino: 133
+quantidade transferida: 8
+
+Transação 14:
+endereco de origem: 254
+endereco de destino: 201
+quantidade transferida: 1
+
+Transação 15:
+endereco de origem: 95
+endereco de destino: 172
+quantidade transferida: 1
+
+Transação 16:
+endereco de origem: 30
+endereco de destino: 9
+quantidade transferida: 3
+
+Transação 17:
+endereco de origem: 135
+endereco de destino: 36
+quantidade transferida: 2
+
+Transação 18:
+endereco de origem: 162
+endereco de destino: 79
+quantidade transferida: 4
+
+Transação 19:
+endereco de origem: 33
+endereco de destino: 36
+quantidade transferida: 4
+
+Transação 20:
+endereco de origem: 89
+endereco de destino: 230
+quantidade transferida: 1
+
+Transação 21:
+endereco de origem: 200
+endereco de destino: 169
+quantidade transferida: 9
+
+Transação 22:
+endereco de origem: 85
+endereco de destino: 170
+quantidade transferida: 27
+
+
+Bloco 82
+Nonce = 411
+Hash: 00c5fd3aeda9342646a7aa5f285fbb84db788ad57c3b90b7d7dc0dca164fd066
+Hash anterior: 00db7f70b3e511dc60d0b8dad3f2e55be380d701534271150fd315d79fff613c
+Endereco do minerador = 233
+Transação 1:
+endereco de origem: 255
+endereco de destino: 86
+quantidade transferida: 50
+
+Transação 2:
+endereco de origem: 183
+endereco de destino: 159
+quantidade transferida: 0
+
+Transação 3:
+endereco de origem: 181
+endereco de destino: 227
+quantidade transferida: 5
+
+Transação 4:
+endereco de origem: 189
+endereco de destino: 38
+quantidade transferida: 1
+
+Transação 5:
+endereco de origem: 255
+endereco de destino: 130
+quantidade transferida: 8
+
+Transação 6:
+endereco de origem: 3
+endereco de destino: 222
+quantidade transferida: 6
+
+Transação 7:
+endereco de origem: 188
+endereco de destino: 9
+quantidade transferida: 7
+
+Transação 8:
+endereco de origem: 244
+endereco de destino: 196
+quantidade transferida: 0
+
+Transação 9:
+endereco de origem: 205
+endereco de destino: 190
+quantidade transferida: 33
+
+Transação 10:
+endereco de origem: 149
+endereco de destino: 31
+quantidade transferida: 3
+
+Transação 11:
+endereco de origem: 175
+endereco de destino: 237
+quantidade transferida: 4
+
+Transação 12:
+endereco de origem: 18
+endereco de destino: 72
+quantidade transferida: 0
+
+Transação 13:
+endereco de origem: 254
+endereco de destino: 52
+quantidade transferida: 1
+
+Transação 14:
+endereco de origem: 242
+endereco de destino: 239
+quantidade transferida: 4
+
+Transação 15:
+endereco de origem: 247
+endereco de destino: 26
+quantidade transferida: 8
+
+Transação 16:
+endereco de origem: 102
+endereco de destino: 84
+quantidade transferida: 22
+
+Transação 17:
+endereco de origem: 219
+endereco de destino: 190
+quantidade transferida: 0
+
+Transação 18:
+endereco de origem: 37
+endereco de destino: 187
+quantidade transferida: 5
+
+Transação 19:
+endereco de origem: 138
+endereco de destino: 38
+quantidade transferida: 16
+
+Transação 20:
+endereco de origem: 188
+endereco de destino: 180
+quantidade transferida: 6
+
+Transação 21:
+endereco de origem: 45
+endereco de destino: 41
+quantidade transferida: 0
+
+Transação 22:
+endereco de origem: 53
+endereco de destino: 119
+quantidade transferida: 2
+
+Transação 23:
+endereco de origem: 161
+endereco de destino: 156
+quantidade transferida: 28
+
+Transação 24:
+endereco de origem: 189
+endereco de destino: 123
+quantidade transferida: 2
+
+Transação 25:
+endereco de origem: 226
+endereco de destino: 94
+quantidade transferida: 35
+
+Transação 26:
+endereco de origem: 238
+endereco de destino: 5
+quantidade transferida: 3
+
+Transação 27:
+endereco de origem: 47
+endereco de destino: 244
+quantidade transferida: 2
+
+Transação 28:
+endereco de origem: 139
+endereco de destino: 96
+quantidade transferida: 1
+
+Transação 29:
+endereco de origem: 55
+endereco de destino: 122
+quantidade transferida: 56
+
+Transação 30:
+endereco de origem: 103
+endereco de destino: 23
+quantidade transferida: 11
+
+Transação 31:
+endereco de origem: 68
+endereco de destino: 227
+quantidade transferida: 2
+
+Transação 32:
+endereco de origem: 226
+endereco de destino: 5
+quantidade transferida: 0
+
+Transação 33:
+endereco de origem: 118
+endereco de destino: 19
+quantidade transferida: 0
+
+Transação 34:
+endereco de origem: 183
+endereco de destino: 132
+quantidade transferida: 1
+
+Transação 35:
+endereco de origem: 35
+endereco de destino: 78
+quantidade transferida: 0
+
+Transação 36:
+endereco de origem: 140
+endereco de destino: 65
+quantidade transferida: 0
+
+Transação 37:
+endereco de origem: 99
+endereco de destino: 127
+quantidade transferida: 1
+
+Transação 38:
+endereco de origem: 33
+endereco de destino: 252
+quantidade transferida: 1
+
+Transação 39:
+endereco de origem: 84
+endereco de destino: 198
+quantidade transferida: 13
+
+Transação 40:
+endereco de origem: 83
+endereco de destino: 44
+quantidade transferida: 39
+
+Transação 41:
+endereco de origem: 254
+endereco de destino: 235
+quantidade transferida: 0
+
+Transação 42:
+endereco de origem: 61
+endereco de destino: 185
+quantidade transferida: 0
+
+Transação 43:
+endereco de origem: 211
+endereco de destino: 11
+quantidade transferida: 13
+
+Transação 44:
+endereco de origem: 160
+endereco de destino: 214
+quantidade transferida: 2
+
+Transação 45:
+endereco de origem: 12
+endereco de destino: 225
+quantidade transferida: 1
+
+
+Bloco 96
+Nonce = 158
+Hash: 00a035d7d6a193a021a41a95a3a0e2144bca1a2c21a053353b073dfb34bd7216
+Hash anterior: 00758c59ad3eee2ec3e62d2dcd2bd81a9028d863c3ceddedcf81a0e4d8d430f3
+Endereco do minerador = 57
+Transação 1:
+endereco de origem: 206
+endereco de destino: 29
+quantidade transferida: 4
+
+Transação 2:
+endereco de origem: 225
+endereco de destino: 61
+quantidade transferida: 7
+
+Transação 3:
+endereco de origem: 246
+endereco de destino: 38
+quantidade transferida: 3
+
+Transação 4:
+endereco de origem: 246
+endereco de destino: 19
+quantidade transferida: 2
+
+Transação 5:
+endereco de origem: 151
+endereco de destino: 0
+quantidade transferida: 34
+
+Transação 6:
+endereco de origem: 239
+endereco de destino: 215
+quantidade transferida: 3
+
+Transação 7:
+endereco de origem: 44
+endereco de destino: 253
+quantidade transferida: 6
+
+Transação 8:
+endereco de origem: 39
+endereco de destino: 86
+quantidade transferida: 4
+
+Transação 9:
+endereco de origem: 116
+endereco de destino: 238
+quantidade transferida: 12
+
+Transação 10:
+endereco de origem: 138
+endereco de destino: 255
+quantidade transferida: 75
+
+Transação 11:
+endereco de origem: 157
+endereco de destino: 176
+quantidade transferida: 3
+
+Transação 12:
+endereco de origem: 42
+endereco de destino: 71
+quantidade transferida: 34
+
+Transação 13:
+endereco de origem: 175
+endereco de destino: 168
+quantidade transferida: 41
+
+Transação 14:
+endereco de origem: 9
+endereco de destino: 172
+quantidade transferida: 4
+
+Transação 15:
+endereco de origem: 201
+endereco de destino: 254
+quantidade transferida: 1
+
+Transação 16:
+endereco de origem: 79
+endereco de destino: 101
+quantidade transferida: 0
+
+Transação 17:
+endereco de origem: 161
+endereco de destino: 149
+quantidade transferida: 0
+
+Transação 18:
+endereco de origem: 44
+endereco de destino: 235
+quantidade transferida: 4
+
+Transação 19:
+endereco de origem: 92
+endereco de destino: 2
+quantidade transferida: 1
+
+Transação 20:
+endereco de origem: 124
+endereco de destino: 166
+quantidade transferida: 31
+
+
+Bloco 52
+Nonce = 78
+Hash: 00285394bd5bb04e6c334d258bb39ff6a455595f01c45217719e60709554d95c
+Hash anterior: 0035ed692ab534fe49e199dd8ec87b0d670958541eba31f99d084d564f956083
+Endereco do minerador = 72
+Transação 1:
+endereco de origem: 41
+endereco de destino: 247
+quantidade transferida: 1
+
+Transação 2:
+endereco de origem: 40
+endereco de destino: 98
+quantidade transferida: 1
+
+Transação 3:
+endereco de origem: 88
+endereco de destino: 230
+quantidade transferida: 4
+
+Transação 4:
+endereco de origem: 230
+endereco de destino: 224
+quantidade transferida: 0
+
+Transação 5:
+endereco de origem: 25
+endereco de destino: 175
+quantidade transferida: 9
+
+Transação 6:
+endereco de origem: 144
+endereco de destino: 204
+quantidade transferida: 3
+
+Transação 7:
+endereco de origem: 71
+endereco de destino: 13
+quantidade transferida: 24
+
+Transação 8:
+endereco de origem: 121
+endereco de destino: 203
+quantidade transferida: 26
+
+Transação 9:
+endereco de origem: 60
+endereco de destino: 254
+quantidade transferida: 1
+
+Transação 10:
+endereco de origem: 253
+endereco de destino: 208
+quantidade transferida: 32
+
+Transação 11:
+endereco de origem: 27
+endereco de destino: 64
+quantidade transferida: 0
+
+Transação 12:
+endereco de origem: 179
+endereco de destino: 171
+quantidade transferida: 1
+
+Transação 13:
+endereco de origem: 36
+endereco de destino: 25
+quantidade transferida: 4
+
+Transação 14:
+endereco de origem: 149
+endereco de destino: 114
+quantidade transferida: 6
+
+Transação 15:
+endereco de origem: 253
+endereco de destino: 189
+quantidade transferida: 9
+
+Transação 16:
+endereco de origem: 150
+endereco de destino: 29
+quantidade transferida: 0
+
+Transação 17:
+endereco de origem: 111
+endereco de destino: 246
+quantidade transferida: 19
+
+Transação 18:
+endereco de origem: 39
+endereco de destino: 231
+quantidade transferida: 24
+
+Transação 19:
+endereco de origem: 6
+endereco de destino: 43
+quantidade transferida: 1
+
+Transação 20:
+endereco de origem: 157
+endereco de destino: 237
+quantidade transferida: 8
+
+Transação 21:
+endereco de origem: 95
+endereco de destino: 7
+quantidade transferida: 14
+
+Transação 22:
+endereco de origem: 95
+endereco de destino: 198
+quantidade transferida: 7
+
+Transação 23:
+endereco de origem: 88
+endereco de destino: 141
+quantidade transferida: 3
+
+Transação 24:
+endereco de origem: 73
+endereco de destino: 156
+quantidade transferida: 1
+
+Transação 25:
+endereco de origem: 242
+endereco de destino: 22
+quantidade transferida: 13
+
+Transação 26:
+endereco de origem: 52
+endereco de destino: 111
+quantidade transferida: 24
+
+Transação 27:
+endereco de origem: 190
+endereco de destino: 215
+quantidade transferida: 4
+
+Transação 28:
+endereco de origem: 103
+endereco de destino: 194
+quantidade transferida: 17
+
+Transação 29:
+endereco de origem: 88
+endereco de destino: 109
+quantidade transferida: 0
+
+Transação 30:
+endereco de origem: 14
+endereco de destino: 164
+quantidade transferida: 1
+
+Transação 31:
+endereco de origem: 47
+endereco de destino: 24
+quantidade transferida: 1
+
+Transação 32:
+endereco de origem: 195
+endereco de destino: 130
+quantidade transferida: 1
+
+Transação 33:
+endereco de origem: 185
+endereco de destino: 55
+quantidade transferida: 43
+
+Transação 34:
+endereco de origem: 156
+endereco de destino: 154
+quantidade transferida: 4
+
+Transação 35:
+endereco de origem: 131
+endereco de destino: 142
+quantidade transferida: 0
+
+Transação 36:
+endereco de origem: 254
+endereco de destino: 69
+quantidade transferida: 0
+
+Transação 37:
+endereco de origem: 239
+endereco de destino: 242
+quantidade transferida: 5
+
+Transação 38:
+endereco de origem: 63
+endereco de destino: 149
+quantidade transferida: 2
+
+Transação 39:
+endereco de origem: 53
+endereco de destino: 202
+quantidade transferida: 12
+
+Transação 40:
+endereco de origem: 35
+endereco de destino: 247
+quantidade transferida: 6
+
+Transação 41:
+endereco de origem: 145
+endereco de destino: 227
+quantidade transferida: 4
+
+Transação 42:
+endereco de origem: 216
+endereco de destino: 255
+quantidade transferida: 1
+
+Transação 43:
+endereco de origem: 79
+endereco de destino: 98
+quantidade transferida: 7
+
+Transação 44:
+endereco de origem: 134
+endereco de destino: 184
+quantidade transferida: 2
+
+
+Bloco 141
+Nonce = 28
+Hash: 007e34738d6e3109036e38c9b81007342f5b94791fccc7d116cc891db20a756e
+Hash anterior: 003e610feab5e0339bc9d3fb771948ef18d33f9c4e9641b85a2b0e51cd599aeb
+Endereco do minerador = 50
+Transação 1:
+endereco de origem: 185
+endereco de destino: 73
+quantidade transferida: 16
+
+Transação 2:
+endereco de origem: 21
+endereco de destino: 72
+quantidade transferida: 14
+
+Transação 3:
+endereco de origem: 73
+endereco de destino: 29
+quantidade transferida: 2
+
+Transação 4:
+endereco de origem: 147
+endereco de destino: 22
+quantidade transferida: 14
+
+Transação 5:
+endereco de origem: 248
+endereco de destino: 102
+quantidade transferida: 6
+
+Transação 6:
+endereco de origem: 143
+endereco de destino: 230
+quantidade transferida: 0
+
+Transação 7:
+endereco de origem: 123
+endereco de destino: 225
+quantidade transferida: 12
+
+Transação 8:
+endereco de origem: 203
+endereco de destino: 38
+quantidade transferida: 11
+
+Transação 9:
+endereco de origem: 16
+endereco de destino: 132
+quantidade transferida: 4
+
+Transação 10:
+endereco de origem: 7
+endereco de destino: 238
+quantidade transferida: 1
+
+Transação 11:
+endereco de origem: 3
+endereco de destino: 106
+quantidade transferida: 13
+
+Transação 12:
+endereco de origem: 196
+endereco de destino: 42
+quantidade transferida: 14
+
+Transação 13:
+endereco de origem: 189
+endereco de destino: 84
+quantidade transferida: 14
+
+Transação 14:
+endereco de origem: 86
+endereco de destino: 253
+quantidade transferida: 41
+
+Transação 15:
+endereco de origem: 226
+endereco de destino: 164
+quantidade transferida: 0
+
+Transação 16:
+endereco de origem: 199
+endereco de destino: 249
+quantidade transferida: 1
+
+Transação 17:
+endereco de origem: 94
+endereco de destino: 7
+quantidade transferida: 22
+
+Transação 18:
+endereco de origem: 242
+endereco de destino: 158
+quantidade transferida: 6
+
+Transação 19:
+endereco de origem: 206
+endereco de destino: 232
+quantidade transferida: 4
+
+Transação 20:
+endereco de origem: 97
+endereco de destino: 247
+quantidade transferida: 3
+
+Transação 21:
+endereco de origem: 189
+endereco de destino: 244
+quantidade transferida: 5
+
+
+Bloco 133
+Nonce = 230
+Hash: 001812ea8cde6ae05b74b617ce6bbc2b55524730046d0b98606bdcc0ba144d15
+Hash anterior: 007e76e103f9075415bde340297a425676a51ac3b396f5fba7b6b24360c7579e
+Endereco do minerador = 102
+Transação 1:
+endereco de origem: 57
+endereco de destino: 205
+quantidade transferida: 92
+
+Transação 2:
+endereco de origem: 180
+endereco de destino: 116
+quantidade transferida: 2
+
+Transação 3:
+endereco de origem: 237
+endereco de destino: 3
+quantidade transferida: 0
+
+Transação 4:
+endereco de origem: 39
+endereco de destino: 38
+quantidade transferida: 14
+
+Transação 5:
+endereco de origem: 234
+endereco de destino: 253
+quantidade transferida: 47
+
+Transação 6:
+endereco de origem: 227
+endereco de destino: 171
+quantidade transferida: 1
+
+Transação 7:
+endereco de origem: 146
+endereco de destino: 46
+quantidade transferida: 16
+
+Transação 8:
+endereco de origem: 136
+endereco de destino: 55
+quantidade transferida: 2
+
+Transação 9:
+endereco de origem: 173
+endereco de destino: 93
+quantidade transferida: 0
+
+Transação 10:
+endereco de origem: 234
+endereco de destino: 221
+quantidade transferida: 7
+
+Transação 11:
+endereco de origem: 88
+endereco de destino: 149
+quantidade transferida: 0
+
+Transação 12:
+endereco de origem: 36
+endereco de destino: 84
+quantidade transferida: 29
+
+Transação 13:
+endereco de origem: 215
+endereco de destino: 227
+quantidade transferida: 4
+
+Transação 14:
+endereco de origem: 34
+endereco de destino: 142
+quantidade transferida: 4
+
+Transação 15:
+endereco de origem: 246
+endereco de destino: 160
+quantidade transferida: 7
+
+Transação 16:
+endereco de origem: 235
+endereco de destino: 246
+quantidade transferida: 21
+
+Transação 17:
+endereco de origem: 113
+endereco de destino: 125
+quantidade transferida: 3
+
+Transação 18:
+endereco de origem: 178
+endereco de destino: 103
+quantidade transferida: 3
+
+Transação 19:
+endereco de origem: 34
+endereco de destino: 125
+quantidade transferida: 0
+
+Transação 20:
+endereco de origem: 227
+endereco de destino: 44
+quantidade transferida: 0
+
+Transação 21:
+endereco de origem: 78
+endereco de destino: 26
+quantidade transferida: 8
+
+Transação 22:
+endereco de origem: 224
+endereco de destino: 47
+quantidade transferida: 4
+
+Transação 23:
+endereco de origem: 206
+endereco de destino: 191
+quantidade transferida: 1
+
+Transação 24:
+endereco de origem: 126
+endereco de destino: 6
+quantidade transferida: 14
+
+Transação 25:
+endereco de origem: 26
+endereco de destino: 14
+quantidade transferida: 5
+
+Transação 26:
+endereco de origem: 78
+endereco de destino: 133
+quantidade transferida: 7
+
+Transação 27:
+endereco de origem: 172
+endereco de destino: 59
+quantidade transferida: 4
+
+Transação 28:
+endereco de origem: 227
+endereco de destino: 171
+quantidade transferida: 1
+
+Transação 29:
+endereco de origem: 5
+endereco de destino: 201
+quantidade transferida: 48
+
+Transação 30:
+endereco de origem: 162
+endereco de destino: 214
+quantidade transferida: 79
+
+Transação 31:
+endereco de origem: 67
+endereco de destino: 151
+quantidade transferida: 18
+
+Transação 32:
+endereco de origem: 152
+endereco de destino: 32
+quantidade transferida: 44
+
+Transação 33:
+endereco de origem: 11
+endereco de destino: 103
+quantidade transferida: 6
+
+Transação 34:
+endereco de origem: 8
+endereco de destino: 146
+quantidade transferida: 31
+
+Transação 35:
+endereco de origem: 7
+endereco de destino: 30
+quantidade transferida: 6
+
+Transação 36:
+endereco de origem: 233
+endereco de destino: 24
+quantidade transferida: 9
+
+Transação 37:
+endereco de origem: 77
+endereco de destino: 115
+quantidade transferida: 33
+
+Transação 38:
+endereco de origem: 128
+endereco de destino: 21
+quantidade transferida: 5
+
+Transação 39:
+endereco de origem: 59
+endereco de destino: 129
+quantidade transferida: 26
+
+
+Bloco 63
+Nonce = 28
+Hash: 0072b9cc765eac474be4f461202000f7c511ad92709783a0409b8e31c69393ef
+Hash anterior: 00b5c63702991fcdada287a23e3645f4c1593f08fe2c8453518c063e42249c1f
+Endereco do minerador = 213
+Transação 1:
+endereco de origem: 53
+endereco de destino: 249
+quantidade transferida: 4
+
+Transação 2:
+endereco de origem: 162
+endereco de destino: 153
+quantidade transferida: 2
+
+Transação 3:
+endereco de origem: 219
+endereco de destino: 196
+quantidade transferida: 4
+
+Transação 4:
+endereco de origem: 244
+endereco de destino: 50
+quantidade transferida: 40
+
+Transação 5:
+endereco de origem: 130
+endereco de destino: 179
+quantidade transferida: 1
+
+Transação 6:
+endereco de origem: 132
+endereco de destino: 134
+quantidade transferida: 0
+
+Transação 7:
+endereco de origem: 1
+endereco de destino: 87
+quantidade transferida: 1
+
+Transação 8:
+endereco de origem: 39
+endereco de destino: 6
+quantidade transferida: 1
+
+Transação 9:
+endereco de origem: 53
+endereco de destino: 172
+quantidade transferida: 1
+
+Transação 10:
+endereco de origem: 24
+endereco de destino: 84
+quantidade transferida: 11
+
+Transação 11:
+endereco de origem: 126
+endereco de destino: 182
+quantidade transferida: 17
+
+Transação 12:
+endereco de origem: 74
+endereco de destino: 156
+quantidade transferida: 1
+
+Transação 13:
+endereco de origem: 229
+endereco de destino: 133
+quantidade transferida: 8
+
+Transação 14:
+endereco de origem: 254
+endereco de destino: 201
+quantidade transferida: 1
+
+Transação 15:
+endereco de origem: 95
+endereco de destino: 172
+quantidade transferida: 1
+
+Transação 16:
+endereco de origem: 30
+endereco de destino: 9
+quantidade transferida: 3
+
+Transação 17:
+endereco de origem: 135
+endereco de destino: 36
+quantidade transferida: 2
+
+Transação 18:
+endereco de origem: 162
+endereco de destino: 79
+quantidade transferida: 4
+
+Transação 19:
+endereco de origem: 33
+endereco de destino: 36
+quantidade transferida: 4
+
+Transação 20:
+endereco de origem: 89
+endereco de destino: 230
+quantidade transferida: 1
+
+Transação 21:
+endereco de origem: 200
+endereco de destino: 169
+quantidade transferida: 9
+
+Transação 22:
+endereco de origem: 85
+endereco de destino: 170
+quantidade transferida: 27
+
+
+Bloco 82
+Nonce = 411
+Hash: 00c5fd3aeda9342646a7aa5f285fbb84db788ad57c3b90b7d7dc0dca164fd066
+Hash anterior: 00db7f70b3e511dc60d0b8dad3f2e55be380d701534271150fd315d79fff613c
+Endereco do minerador = 233
+Transação 1:
+endereco de origem: 255
+endereco de destino: 86
+quantidade transferida: 50
+
+Transação 2:
+endereco de origem: 183
+endereco de destino: 159
+quantidade transferida: 0
+
+Transação 3:
+endereco de origem: 181
+endereco de destino: 227
+quantidade transferida: 5
+
+Transação 4:
+endereco de origem: 189
+endereco de destino: 38
+quantidade transferida: 1
+
+Transação 5:
+endereco de origem: 255
+endereco de destino: 130
+quantidade transferida: 8
+
+Transação 6:
+endereco de origem: 3
+endereco de destino: 222
+quantidade transferida: 6
+
+Transação 7:
+endereco de origem: 188
+endereco de destino: 9
+quantidade transferida: 7
+
+Transação 8:
+endereco de origem: 244
+endereco de destino: 196
+quantidade transferida: 0
+
+Transação 9:
+endereco de origem: 205
+endereco de destino: 190
+quantidade transferida: 33
+
+Transação 10:
+endereco de origem: 149
+endereco de destino: 31
+quantidade transferida: 3
+
+Transação 11:
+endereco de origem: 175
+endereco de destino: 237
+quantidade transferida: 4
+
+Transação 12:
+endereco de origem: 18
+endereco de destino: 72
+quantidade transferida: 0
+
+Transação 13:
+endereco de origem: 254
+endereco de destino: 52
+quantidade transferida: 1
+
+Transação 14:
+endereco de origem: 242
+endereco de destino: 239
+quantidade transferida: 4
+
+Transação 15:
+endereco de origem: 247
+endereco de destino: 26
+quantidade transferida: 8
+
+Transação 16:
+endereco de origem: 102
+endereco de destino: 84
+quantidade transferida: 22
+
+Transação 17:
+endereco de origem: 219
+endereco de destino: 190
+quantidade transferida: 0
+
+Transação 18:
+endereco de origem: 37
+endereco de destino: 187
+quantidade transferida: 5
+
+Transação 19:
+endereco de origem: 138
+endereco de destino: 38
+quantidade transferida: 16
+
+Transação 20:
+endereco de origem: 188
+endereco de destino: 180
+quantidade transferida: 6
+
+Transação 21:
+endereco de origem: 45
+endereco de destino: 41
+quantidade transferida: 0
+
+Transação 22:
+endereco de origem: 53
+endereco de destino: 119
+quantidade transferida: 2
+
+Transação 23:
+endereco de origem: 161
+endereco de destino: 156
+quantidade transferida: 28
+
+Transação 24:
+endereco de origem: 189
+endereco de destino: 123
+quantidade transferida: 2
+
+Transação 25:
+endereco de origem: 226
+endereco de destino: 94
+quantidade transferida: 35
+
+Transação 26:
+endereco de origem: 238
+endereco de destino: 5
+quantidade transferida: 3
+
+Transação 27:
+endereco de origem: 47
+endereco de destino: 244
+quantidade transferida: 2
+
+Transação 28:
+endereco de origem: 139
+endereco de destino: 96
+quantidade transferida: 1
+
+Transação 29:
+endereco de origem: 55
+endereco de destino: 122
+quantidade transferida: 56
+
+Transação 30:
+endereco de origem: 103
+endereco de destino: 23
+quantidade transferida: 11
+
+Transação 31:
+endereco de origem: 68
+endereco de destino: 227
+quantidade transferida: 2
+
+Transação 32:
+endereco de origem: 226
+endereco de destino: 5
+quantidade transferida: 0
+
+Transação 33:
+endereco de origem: 118
+endereco de destino: 19
+quantidade transferida: 0
+
+Transação 34:
+endereco de origem: 183
+endereco de destino: 132
+quantidade transferida: 1
+
+Transação 35:
+endereco de origem: 35
+endereco de destino: 78
+quantidade transferida: 0
+
+Transação 36:
+endereco de origem: 140
+endereco de destino: 65
+quantidade transferida: 0
+
+Transação 37:
+endereco de origem: 99
+endereco de destino: 127
+quantidade transferida: 1
+
+Transação 38:
+endereco de origem: 33
+endereco de destino: 252
+quantidade transferida: 1
+
+Transação 39:
+endereco de origem: 84
+endereco de destino: 198
+quantidade transferida: 13
+
+Transação 40:
+endereco de origem: 83
+endereco de destino: 44
+quantidade transferida: 39
+
+Transação 41:
+endereco de origem: 254
+endereco de destino: 235
+quantidade transferida: 0
+
+Transação 42:
+endereco de origem: 61
+endereco de destino: 185
+quantidade transferida: 0
+
+Transação 43:
+endereco de origem: 211
+endereco de destino: 11
+quantidade transferida: 13
+
+Transação 44:
+endereco de origem: 160
+endereco de destino: 214
+quantidade transferida: 2
+
+Transação 45:
+endereco de origem: 12
+endereco de destino: 225
+quantidade transferida: 1
+
+
+Bloco 96
+Nonce = 158
+Hash: 00a035d7d6a193a021a41a95a3a0e2144bca1a2c21a053353b073dfb34bd7216
+Hash anterior: 00758c59ad3eee2ec3e62d2dcd2bd81a9028d863c3ceddedcf81a0e4d8d430f3
+Endereco do minerador = 57
+Transação 1:
+endereco de origem: 206
+endereco de destino: 29
+quantidade transferida: 4
+
+Transação 2:
+endereco de origem: 225
+endereco de destino: 61
+quantidade transferida: 7
+
+Transação 3:
+endereco de origem: 246
+endereco de destino: 38
+quantidade transferida: 3
+
+Transação 4:
+endereco de origem: 246
+endereco de destino: 19
+quantidade transferida: 2
+
+Transação 5:
+endereco de origem: 151
+endereco de destino: 0
+quantidade transferida: 34
+
+Transação 6:
+endereco de origem: 239
+endereco de destino: 215
+quantidade transferida: 3
+
+Transação 7:
+endereco de origem: 44
+endereco de destino: 253
+quantidade transferida: 6
+
+Transação 8:
+endereco de origem: 39
+endereco de destino: 86
+quantidade transferida: 4
+
+Transação 9:
+endereco de origem: 116
+endereco de destino: 238
+quantidade transferida: 12
+
+Transação 10:
+endereco de origem: 138
+endereco de destino: 255
+quantidade transferida: 75
+
+Transação 11:
+endereco de origem: 157
+endereco de destino: 176
+quantidade transferida: 3
+
+Transação 12:
+endereco de origem: 42
+endereco de destino: 71
+quantidade transferida: 34
+
+Transação 13:
+endereco de origem: 175
+endereco de destino: 168
+quantidade transferida: 41
+
+Transação 14:
+endereco de origem: 9
+endereco de destino: 172
+quantidade transferida: 4
+
+Transação 15:
+endereco de origem: 201
+endereco de destino: 254
+quantidade transferida: 1
+
+Transação 16:
+endereco de origem: 79
+endereco de destino: 101
+quantidade transferida: 0
+
+Transação 17:
+endereco de origem: 161
+endereco de destino: 149
+quantidade transferida: 0
+
+Transação 18:
+endereco de origem: 44
+endereco de destino: 235
+quantidade transferida: 4
+
+Transação 19:
+endereco de origem: 92
+endereco de destino: 2
+quantidade transferida: 1
+
+Transação 20:
+endereco de origem: 124
+endereco de destino: 166
+quantidade transferida: 31
+
+
+Bloco 52
+Nonce = 78
+Hash: 00285394bd5bb04e6c334d258bb39ff6a455595f01c45217719e60709554d95c
+Hash anterior: 0035ed692ab534fe49e199dd8ec87b0d670958541eba31f99d084d564f956083
+Endereco do minerador = 72
+Transação 1:
+endereco de origem: 41
+endereco de destino: 247
+quantidade transferida: 1
+
+Transação 2:
+endereco de origem: 40
+endereco de destino: 98
+quantidade transferida: 1
+
+Transação 3:
+endereco de origem: 88
+endereco de destino: 230
+quantidade transferida: 4
+
+Transação 4:
+endereco de origem: 230
+endereco de destino: 224
+quantidade transferida: 0
+
+Transação 5:
+endereco de origem: 25
+endereco de destino: 175
+quantidade transferida: 9
+
+Transação 6:
+endereco de origem: 144
+endereco de destino: 204
+quantidade transferida: 3
+
+Transação 7:
+endereco de origem: 71
+endereco de destino: 13
+quantidade transferida: 24
+
+Transação 8:
+endereco de origem: 121
+endereco de destino: 203
+quantidade transferida: 26
+
+Transação 9:
+endereco de origem: 60
+endereco de destino: 254
+quantidade transferida: 1
+
+Transação 10:
+endereco de origem: 253
+endereco de destino: 208
+quantidade transferida: 32
+
+Transação 11:
+endereco de origem: 27
+endereco de destino: 64
+quantidade transferida: 0
+
+Transação 12:
+endereco de origem: 179
+endereco de destino: 171
+quantidade transferida: 1
+
+Transação 13:
+endereco de origem: 36
+endereco de destino: 25
+quantidade transferida: 4
+
+Transação 14:
+endereco de origem: 149
+endereco de destino: 114
+quantidade transferida: 6
+
+Transação 15:
+endereco de origem: 253
+endereco de destino: 189
+quantidade transferida: 9
+
+Transação 16:
+endereco de origem: 150
+endereco de destino: 29
+quantidade transferida: 0
+
+Transação 17:
+endereco de origem: 111
+endereco de destino: 246
+quantidade transferida: 19
+
+Transação 18:
+endereco de origem: 39
+endereco de destino: 231
+quantidade transferida: 24
+
+Transação 19:
+endereco de origem: 6
+endereco de destino: 43
+quantidade transferida: 1
+
+Transação 20:
+endereco de origem: 157
+endereco de destino: 237
+quantidade transferida: 8
+
+Transação 21:
+endereco de origem: 95
+endereco de destino: 7
+quantidade transferida: 14
+
+Transação 22:
+endereco de origem: 95
+endereco de destino: 198
+quantidade transferida: 7
+
+Transação 23:
+endereco de origem: 88
+endereco de destino: 141
+quantidade transferida: 3
+
+Transação 24:
+endereco de origem: 73
+endereco de destino: 156
+quantidade transferida: 1
+
+Transação 25:
+endereco de origem: 242
+endereco de destino: 22
+quantidade transferida: 13
+
+Transação 26:
+endereco de origem: 52
+endereco de destino: 111
+quantidade transferida: 24
+
+Transação 27:
+endereco de origem: 190
+endereco de destino: 215
+quantidade transferida: 4
+
+Transação 28:
+endereco de origem: 103
+endereco de destino: 194
+quantidade transferida: 17
+
+Transação 29:
+endereco de origem: 88
+endereco de destino: 109
+quantidade transferida: 0
+
+Transação 30:
+endereco de origem: 14
+endereco de destino: 164
+quantidade transferida: 1
+
+Transação 31:
+endereco de origem: 47
+endereco de destino: 24
+quantidade transferida: 1
+
+Transação 32:
+endereco de origem: 195
+endereco de destino: 130
+quantidade transferida: 1
+
+Transação 33:
+endereco de origem: 185
+endereco de destino: 55
+quantidade transferida: 43
+
+Transação 34:
+endereco de origem: 156
+endereco de destino: 154
+quantidade transferida: 4
+
+Transação 35:
+endereco de origem: 131
+endereco de destino: 142
+quantidade transferida: 0
+
+Transação 36:
+endereco de origem: 254
+endereco de destino: 69
+quantidade transferida: 0
+
+Transação 37:
+endereco de origem: 239
+endereco de destino: 242
+quantidade transferida: 5
+
+Transação 38:
+endereco de origem: 63
+endereco de destino: 149
+quantidade transferida: 2
+
+Transação 39:
+endereco de origem: 53
+endereco de destino: 202
+quantidade transferida: 12
+
+Transação 40:
+endereco de origem: 35
+endereco de destino: 247
+quantidade transferida: 6
+
+Transação 41:
+endereco de origem: 145
+endereco de destino: 227
+quantidade transferida: 4
+
+Transação 42:
+endereco de origem: 216
+endereco de destino: 255
+quantidade transferida: 1
+
+Transação 43:
+endereco de origem: 79
+endereco de destino: 98
+quantidade transferida: 7
+
+Transação 44:
+endereco de origem: 134
+endereco de destino: 184
+quantidade transferida: 2
+
+
+Bloco 141
+Nonce = 28
+Hash: 007e34738d6e3109036e38c9b81007342f5b94791fccc7d116cc891db20a756e
+Hash anterior: 003e610feab5e0339bc9d3fb771948ef18d33f9c4e9641b85a2b0e51cd599aeb
+Endereco do minerador = 50
+Transação 1:
+endereco de origem: 185
+endereco de destino: 73
+quantidade transferida: 16
+
+Transação 2:
+endereco de origem: 21
+endereco de destino: 72
+quantidade transferida: 14
+
+Transação 3:
+endereco de origem: 73
+endereco de destino: 29
+quantidade transferida: 2
+
+Transação 4:
+endereco de origem: 147
+endereco de destino: 22
+quantidade transferida: 14
+
+Transação 5:
+endereco de origem: 248
+endereco de destino: 102
+quantidade transferida: 6
+
+Transação 6:
+endereco de origem: 143
+endereco de destino: 230
+quantidade transferida: 0
+
+Transação 7:
+endereco de origem: 123
+endereco de destino: 225
+quantidade transferida: 12
+
+Transação 8:
+endereco de origem: 203
+endereco de destino: 38
+quantidade transferida: 11
+
+Transação 9:
+endereco de origem: 16
+endereco de destino: 132
+quantidade transferida: 4
+
+Transação 10:
+endereco de origem: 7
+endereco de destino: 238
+quantidade transferida: 1
+
+Transação 11:
+endereco de origem: 3
+endereco de destino: 106
+quantidade transferida: 13
+
+Transação 12:
+endereco de origem: 196
+endereco de destino: 42
+quantidade transferida: 14
+
+Transação 13:
+endereco de origem: 189
+endereco de destino: 84
+quantidade transferida: 14
+
+Transação 14:
+endereco de origem: 86
+endereco de destino: 253
+quantidade transferida: 41
+
+Transação 15:
+endereco de origem: 226
+endereco de destino: 164
+quantidade transferida: 0
+
+Transação 16:
+endereco de origem: 199
+endereco de destino: 249
+quantidade transferida: 1
+
+Transação 17:
+endereco de origem: 94
+endereco de destino: 7
+quantidade transferida: 22
+
+Transação 18:
+endereco de origem: 242
+endereco de destino: 158
+quantidade transferida: 6
+
+Transação 19:
+endereco de origem: 206
+endereco de destino: 232
+quantidade transferida: 4
+
+Transação 20:
+endereco de origem: 97
+endereco de destino: 247
+quantidade transferida: 3
+
+Transação 21:
+endereco de origem: 189
+endereco de destino: 244
+quantidade transferida: 5
+
+

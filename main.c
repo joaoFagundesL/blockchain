@@ -11,7 +11,7 @@
 #include <sys/types.h>
 #include <time.h>
 
-#define TOTAL_BLOCOS 200
+#define TOTAL_BLOCOS 300
 #define MAX_TRANSACOES_BLOCO 61
 #define NUM_ENDERECOS 256
 #define DATA_LENGTH 184
@@ -303,6 +303,7 @@ void exibir_dados_bloco(struct bloco_minerado bloco, const char *filename) {
     }
   }
   fprintf(file, "\n");
+  fclose(file);
 }
 
 void imprimir_blocos_nonce(const char *nome_arquivo,
@@ -344,6 +345,7 @@ void imprimir_blocos_nonce(const char *nome_arquivo,
 
       /* Leio o bloco que estava naquele offset */
       fread(&bloco, sizeof(struct bloco_minerado), 1, arquivo);
+      printf("registro = %u", bloco.bloco.nonce);
 
       /* Imprimir todos os dados daquele bloco */
       exibir_dados_bloco(bloco, filename);
@@ -408,9 +410,10 @@ void imprimir_blocos_endereco(const char *nome_arquivo,
       /* Leio o bloco que estava naquele offset */
       fread(&bloco, sizeof(struct bloco_minerado), 1, arquivo);
 
+      printf("endereco = %d\n", bloco.bloco.data[183]);
+
       /* Imprimir todos os dados daquele bloco */
       exibir_dados_bloco(bloco, filename);
-
       if (blocos_impressos >= n)
         break;
 
@@ -830,16 +833,21 @@ void gerar_transacoes_bloco(struct bloco_nao_minerado *bloco,
     unsigned long int endereco_destino;
     unsigned long int quantidade;
 
+    quantidade =
+        sistema->carteira[endereco_origem] == 0
+            ? 0
+            : genRandLong(rand) %
+                  ((unsigned long int)sistema->carteira[endereco_origem] + 1);
+
     /* O endereco de destino e origem nunca vao ser iguais por conta desse do
      * while (opcional) */
     do {
       endereco_destino = genRandLong(rand) % NUM_ENDERECOS;
     } while (endereco_origem == endereco_destino);
 
-    /* Escolhe a carteira com base no endereco sorteado */
-    uint32_t saldo_disponivel = sistema->carteira[endereco_origem];
-
-    quantidade = genRandLong(rand) % (saldo_disponivel + 1);
+    /* Se eu faco o sorteio aqui ele da um numero muito estranho */
+    // uint32_t saldo_disponivel = sistema->carteira[endereco_origem];
+    // quantidade = genRandLong(rand) % (saldo_disponivel + 1);
 
     /* Retiro a quantidade de bitcoins do endereco de origem  */
     sistema->carteira[endereco_origem] -= quantidade;
