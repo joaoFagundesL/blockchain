@@ -11,7 +11,7 @@
 #include <sys/types.h>
 #include <time.h>
 
-#define TOTAL_BLOCOS 4000
+#define TOTAL_BLOCOS 1000
 #define MAX_TRANSACOES_BLOCO 61
 #define NUM_ENDERECOS 256
 #define DATA_LENGTH 184
@@ -192,9 +192,12 @@ void criar_arquivo_indice(const char *nome_arquivo,
   while (fread(&bloco, sizeof(struct bloco_minerado), 1, arquivo) > 0) {
     registros[contador].endereco = bloco.bloco.data[DATA_LENGTH - 1];
 
-    /* Usei um offset para ficar melhor depois a busca pois eu só me desloco no
-     * arquivo baseado no offset */
-    // registros[contador].offset = contador * sizeof(struct bloco_minerado);
+    /* [a] [b] [c] [d] [bloco que foi lido]
+     * o ftell me retornaria na posicao logo apos o bloco que foi lido, logo se
+     * eu subtrair o tamanho desse bloco eu tenho o offset dele */
+
+    /* Ftell retorna aonde estou no arquivo. Se eu faço ftell - sizeof eu volto
+     * para o bloco que acabou de ser lido, ou seja consigo o offset dele */
     registros[contador].offset = ftell(arquivo) - sizeof(struct bloco_minerado);
 
     contador++;
@@ -243,6 +246,8 @@ void criar_arquivo_indice_nonce(const char *nome_arquivo,
   while (fread(&bloco, sizeof(struct bloco_minerado), 1, arquivo) > 0) {
     registros[contador].nonce = bloco.bloco.nonce;
 
+    /* Ftell retorna aonde estou no arquivo. Se eu faço ftell - sizeof eu volto
+     * para o bloco que acabou de ser lido, ou seja consigo o offset dele */
     registros[contador].offset = ftell(arquivo) - sizeof(struct bloco_minerado);
 
     contador++;
@@ -891,10 +896,6 @@ void gerar_transacoes_bloco(struct bloco_nao_minerado *bloco,
       sistema->carteira[i] += carteira_auxiliar[i];
       inserir_enderecos_com_bitcoins(raiz, i);
     }
-  }
-
-  if (bloco->data[183] == 136) {
-    printf("num = %d ", bloco->numero);
   }
 }
 
