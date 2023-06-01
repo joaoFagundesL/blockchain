@@ -84,6 +84,11 @@ struct indice_nonce {
   long offset;
 };
 
+struct transacao_ordenada {
+  int quantidade;
+  struct bloco_minerado *bloco;
+};
+
 void insere_arquivo(struct bloco_minerado **blockchain,
                     const char *nomeArquivo) {
 
@@ -987,11 +992,6 @@ void imprimir_blocos_minerados(struct bloco_minerado *blockchain) {
     atual = atual->prox;
   }
 }
-
-struct transacao_ordenada {
-  int quantidade;
-  struct bloco_minerado *bloco;
-};
 
 void transacoes_crescente(struct bloco_minerado *blockchain, int n) {
   if (blockchain == NULL)
