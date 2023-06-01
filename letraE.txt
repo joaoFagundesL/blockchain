@@ -1,0 +1,3 @@
+Quantidade media de bitcoins por bloco = 1526.08
+Quantidade media de bitcoins por bloco = 100.00
+Quantidade media de bitcoins por bloco = 75.00
