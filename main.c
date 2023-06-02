@@ -11,7 +11,7 @@
 #include <sys/types.h>
 #include <time.h>
 
-#define TOTAL_BLOCOS 1000
+#define TOTAL_BLOCOS 300
 #define MAX_TRANSACOES_BLOCO 61
 #define NUM_ENDERECOS 256
 #define DATA_LENGTH MAX_TRANSACOES_BLOCO * 3 + 1
@@ -1137,6 +1137,12 @@ void processar_bloco(struct enderecos_bitcoin **raiz,
     memcpy(hash_anterior, hash, SHA256_DIGEST_LENGTH);
   }
 }
+void limpa_buffer(void) {
+  int c;
+
+  while ((c = getchar()) != '\n' && c != EOF)
+    ;
+}
 
 int main() {
   struct enderecos_bitcoin *raiz = NULL;
@@ -1210,8 +1216,15 @@ int main() {
       imprimir_blocos_nonce("blocos.bin", "indices_nonce.bin");
     else if (opcao == 'h')
       transacoes_crescente(blockchain);
-    else
-      break;
+    else {
+      printf("Deseja sair? (y / n): ");
+      limpa_buffer();
+      scanf(" %c", &opcao);
+      printf("\n\n");
+
+      if (opcao == 'y')
+        exit(0);
+    }
   }
 
   free_blockchain(&blockchain);
