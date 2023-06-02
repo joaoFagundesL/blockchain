@@ -11,7 +11,7 @@
 #include <sys/types.h>
 #include <time.h>
 
-#define TOTAL_BLOCOS 3
+#define TOTAL_BLOCOS 1000
 #define MAX_TRANSACOES_BLOCO 61
 #define NUM_ENDERECOS 256
 #define DATA_LENGTH MAX_TRANSACOES_BLOCO * 3 + 1
@@ -319,8 +319,8 @@ void exibir_dados_bloco(struct bloco_minerado bloco, const char *filename) {
       fprintf(file, "quantidade transferida: %u\n\n", quantidade);
     }
   }
+
   fprintf(file, "\n");
-  printf("Registro armazendo no arquivo '%s'\n\n", filename);
   fclose(file);
 }
 
@@ -529,7 +529,7 @@ void verificar_hash_com_menos_transacao(struct bloco_minerado *blockchain,
 
   const char *filename = "letraD.txt";
 
-  FILE *file = fopen(filename, "a");
+  FILE *file = fopen(filename, "w");
   if (file == NULL) {
     fprintf(stderr, "Erro ao abrir o arquivo\n");
     return;
@@ -584,7 +584,7 @@ void verificar_hash_com_mais_transacao(struct bloco_minerado *blockchain,
                                        struct estatisticas *est) {
 
   const char *filename = "letraC.txt";
-  FILE *file = fopen(filename, "a");
+  FILE *file = fopen(filename, "w");
   if (file == NULL) {
     fprintf(stderr, "Erro ao abrir o arquivo\n");
     return;
@@ -626,7 +626,7 @@ void verificar_hash_com_mais_transacao(struct bloco_minerado *blockchain,
 
 void encontrar_maior_numero_bitcoins(uint32_t carteira[]) {
   const char *filename = "letraA.txt";
-  FILE *file = fopen(filename, "a");
+  FILE *file = fopen(filename, "w");
   if (file == NULL) {
     fprintf(stderr, "Erro ao abrir o arquivo de saída!");
     return;
@@ -719,7 +719,7 @@ void atualizar_maior_menor_transacao(struct estatisticas *est,
 void endereco_com_mais_blocos_minerados(struct estatisticas est) {
   const char *filename = "letraB.txt";
 
-  FILE *file = fopen(filename, "a");
+  FILE *file = fopen(filename, "w");
   if (file == NULL) {
     fprintf(stderr, "Erro ao abrir o arquivo\n");
     return;
@@ -750,7 +750,7 @@ void endereco_com_mais_blocos_minerados(struct estatisticas est) {
 
 void quantidade_media_bitcoins_bloco(struct estatisticas est) {
   const char *name = "letraE.txt";
-  FILE *file = fopen(name, "a");
+  FILE *file = fopen(name, "w");
 
   assert(file != NULL);
 
@@ -944,11 +944,11 @@ void inserir_bloco(struct bloco_minerado **blockchain,
 }
 
 /* Funcao que imprime todos os blocos */
-void imprimir_blocos_minerados(struct bloco_minerado *blockchain) {
+void imprimir_blocos_minerados(struct bloco_minerado *blockchain,
+                               const char *filename) {
   struct bloco_minerado *atual = blockchain;
 
-  const char *filename = "blocos.txt";
-  FILE *file = fopen(filename, "w");
+  FILE *file = fopen(filename, "a");
   if (file == NULL) {
     fprintf(stderr, "erro ao abrir arquivo\n");
     exit(EXIT_FAILURE);
@@ -993,17 +993,37 @@ void imprimir_blocos_minerados(struct bloco_minerado *blockchain) {
   }
 }
 
-void transacoes_crescente(struct bloco_minerado *blockchain, int n) {
+void ordernar_vetor(struct transacao_ordenada *arr, int n) {
+  for (int i = 0; i < n; i++) {
+    for (int j = i + 1; j < n; j++) {
+      if (arr[i].quantidade > arr[j].quantidade) {
+        struct transacao_ordenada tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+      }
+    }
+  }
+}
+
+void transacoes_crescente(struct bloco_minerado *blockchain) {
   if (blockchain == NULL)
     return;
 
+  int n;
+  printf("Informe a quantidade de blocos: ");
+  scanf("%d", &n);
+
+  /* - 1 porque o genesis vai contar ja que ele nao tem transacao */
   if (n < 0 || n > TOTAL_BLOCOS - 1)
     return;
 
+  /* Uma array de struct que vai armazenar duas informacoes: bloco e a
+   * quantidade de transacoes */
   struct transacao_ordenada arr[n];
   struct bloco_minerado *curr = blockchain;
 
-  if (curr->bloco.numero == 1)
+  /* Se for o genesis eu vou para o proximo */
+  if (curr->bloco.numero == BLOCO_GENESIS)
     curr = curr->prox;
 
   for (int i = 0; i < n; i++) {
@@ -1018,22 +1038,19 @@ void transacoes_crescente(struct bloco_minerado *blockchain, int n) {
       arr[i].quantidade = quantidade_transacao;
     }
 
+    /* Guarda o bloco no vetor */
     arr[i].bloco = curr;
+
+    /* Avanca para o proximo bloco, respeitando o limite n */
     curr = curr->prox;
   }
 
-  for (int i = 0; i < n; i++) {
-    for (int j = i + 1; j < n; j++) {
-      if (arr[i].quantidade > arr[j].quantidade) {
-        struct transacao_ordenada tmp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = tmp;
-      }
-    }
-  }
+  ordernar_vetor(arr, n);
 
   for (int i = 0; i < n; i++)
     exibir_dados_bloco(*arr[i].bloco, "letraH.txt");
+
+  printf("Registro armazenado no arquivo 'letraH.txt'\n\n");
 }
 
 void free_blockchain(struct bloco_minerado **blockchain) {
@@ -1156,11 +1173,9 @@ int main() {
   struct bloco_minerado *test = le_arquivo("blocos.bin");
 
   /* Escrece os blocos em um txt */
-  imprimir_blocos_minerados(blockchain);
+  imprimir_blocos_minerados(blockchain, "blocos.txt");
 
   char opcao;
-
-  transacoes_crescente(blockchain, 2);
 
   while (1) {
     printf("[a] => Endereco com mais bitcoins e o numero de bitcoins dele\n[b] "
@@ -1172,7 +1187,7 @@ int main() {
            "minerados a partir de um endereco\n[h] => Imprimir os n primeiros "
            "blocos em ordem crescente de quantidade de transacoes\n[i] => "
            "Imprimir todos os "
-           "blocos de um dado nonce\n"
+           "blocos de um dado nonce\n[outro] => Sair\n"
            "============================================================"
            "==\n--> ");
 
@@ -1193,6 +1208,8 @@ int main() {
       imprimir_blocos_endereco("blocos.bin", "indices.bin");
     else if (opcao == 'i')
       imprimir_blocos_nonce("blocos.bin", "indices_nonce.bin");
+    else if (opcao == 'h')
+      transacoes_crescente(blockchain);
     else
       break;
   }
