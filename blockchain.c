@@ -535,7 +535,6 @@ void encontrar_maior_numero_bitcoins(uint32_t carteira[]) {
 
   for (int i = 0; i < num_enderecos_max_bitcoins; i++)
     printf("%u ", enderecos_max_bitcoins[i]);
-  printf("(Com %d blocos minerados)\n", TOTAL_BLOCOS);
 
   printf("\n\n");
 
@@ -614,7 +613,7 @@ void endereco_com_mais_blocos_minerados(struct estatisticas est) {
 
 void quantidade_media_bitcoins_bloco(struct estatisticas est) {
   printf("Quantidade media de bitcoins por bloco = %.2f\n\n",
-         est.quantidade_total_bitcoins_por_bloco / (TOTAL_BLOCOS - 1));
+         est.quantidade_total_bitcoins_por_bloco / (TOTAL_BLOCOS));
 }
 
 /* Funcao que remove elemento da lista */
@@ -715,14 +714,7 @@ void gerar_transacoes_bloco(struct bloco_nao_minerado *bloco,
       endereco_destino = genRandLong(rand) % NUM_ENDERECOS;
     } while (endereco_origem == endereco_destino);
 
-    // if (sistema->carteira[endereco_origem] == 0)
-    // quantidade = 0;
-    // else
     quantidade = genRandLong(rand) % (sistema->carteira[endereco_origem] + 1);
-
-    /* Sempre armazenando a quantidade de bitcoins assim para manter controle
-     * da media */
-    (*est)->quantidade_total_bitcoins_por_bloco += quantidade;
 
     /* Retiro a quantidade de bitcoins do endereco de origem  */
     sistema->carteira[endereco_origem] -= quantidade;
@@ -736,9 +728,14 @@ void gerar_transacoes_bloco(struct bloco_nao_minerado *bloco,
     if ((*est)->tamanho_lista_enderecos_com_bitcoin > 1)
       checa_zero_bitcoin(raiz, est, sistema);
 
+    /* Sempre armazenando a quantidade de bitcoins assim para manter controle
+     * da media */
+
     bloco->data[i * 3] = endereco_origem;
     bloco->data[i * 3 + 1] = endereco_destino;
     bloco->data[i * 3 + 2] = quantidade;
+
+    (*est)->quantidade_total_bitcoins_por_bloco += bloco->data[i * 3 + 2];
   }
 
   atualizar_maior_menor_transacao(*est, max_transacao);
@@ -746,12 +743,12 @@ void gerar_transacoes_bloco(struct bloco_nao_minerado *bloco,
   /* Ultima coisa a ser feita é gerar o minerador */
   unsigned long int endereco_minerador = genRandLong(rand) % NUM_ENDERECOS;
 
+  /* data[183] é o endereco do minerador */
+  bloco->data[DATA_LENGTH - 1] = (unsigned char)endereco_minerador;
+
   /* Incremento a quantidade de blocos minerados com base no valor do
    * minerador sorteado */
   (*est)->array_quantidade_de_blocos_minerados[endereco_minerador] += 1;
-
-  /* data[183] é o endereco do minerador */
-  bloco->data[DATA_LENGTH - 1] = (unsigned char)endereco_minerador;
 
   minerar_bloco(bloco, hash, est);
 
@@ -964,7 +961,7 @@ void processar_bloco(struct enderecos_bitcoin **raiz,
   unsigned char hash_anterior[SHA256_DIGEST_LENGTH] = {0};
   MTRand rand = seedRand(1234567);
 
-  for (numero_bloco = 1; numero_bloco <= TOTAL_BLOCOS; ++numero_bloco) {
+  for (numero_bloco = 1; numero_bloco <= TOTAL_BLOCOS; numero_bloco++) {
     bloco.numero = numero_bloco;
     memcpy(bloco.hash_anterior, hash_anterior, SHA256_DIGEST_LENGTH);
 
@@ -985,7 +982,7 @@ void processar_bloco(struct enderecos_bitcoin **raiz,
       /* Aqui eu minero direto e nao chamo a funcao de gerar transacoes */
       minerar_bloco(&bloco, hash, &est);
 
-      ++est->array_quantidade_de_blocos_minerados[endereco_minerador];
+      est->array_quantidade_de_blocos_minerados[endereco_minerador] += 1;
 
       sistema->carteira[(uint32_t)bloco.data[DATA_LENGTH - 1]] +=
           RECOMPENSA_MINERACAO;
