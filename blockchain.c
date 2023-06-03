@@ -451,6 +451,7 @@ void verificar_hash_com_menos_transacao(struct bloco_minerado *blockchain,
         tmp->bloco.numero == BLOCO_GENESIS) {
       for (size_t i = 0; i < SHA256_DIGEST_LENGTH; i++)
         printf("%02x", tmp->hash[i]);
+      printf("\n");
     }
 
     /* Avanca ate ser nulo */

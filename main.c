@@ -56,15 +56,9 @@ int main() {
     scanf(" %c", &opcao);
     if (opcao == 'a')
       encontrar_maior_numero_bitcoins(sistema.carteira);
-    else if (opcao == 'b') {
+    else if (opcao == 'b')
       endereco_com_mais_blocos_minerados(est);
-
-      int soma = 0;
-      for (int i = 0; i < NUM_ENDERECOS; i++) {
-        soma += est.array_quantidade_de_blocos_minerados[i];
-      }
-      printf("soma = %d", soma);
-    } else if (opcao == 'c')
+    else if (opcao == 'c')
       verificar_hash_com_mais_transacao(blockchain, &est);
     else if (opcao == 'd')
       verificar_hash_com_menos_transacao(blockchain, &est);
